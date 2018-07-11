@@ -1,0 +1,19 @@
+﻿<Config>
+  <SystemConfig>
+    <ConnectionString>
+      <Stock>
+        Data Source=TOKEZMAX-PC\SQLEXPRESS;Initial Catalog=Stock;Integrated Security=True
+      </Stock>
+    </ConnectionString>
+    
+    <AppSettings>
+      <UploadByDeilyURL>http://localhost:2458/Data/UploadByDeily</UploadByDeilyURL>
+    </AppSettings>
+    
+    <Package>
+        <Tools.Config>
+            <ConfigDbConnection></ConfigDbConnection>
+        </Tools.Config>
+    </Package>
+  </SystemConfig>
+</Config>
