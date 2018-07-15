@@ -111,15 +111,49 @@
     $("#btnStartNow").click(function () {
         $('a#alinkGoContact').click();
     });
-
+    
     $('#btnReg').magnificPopup({
         items:[{
             src: '#frmReg', // CSS selector of an element on page that should be used as a popup
-            type: 'inline'
-        }
-        ]
+            type: 'iframe',
+            iframe: {
+                dailymotion: {
+                    src: 'LineLoginAuth.aspx'
+                }
+            }
+        }]
     });
     
+
+    /*
+    $('#btnReg').magnificPopup({
+        type: 'iframe',
+        iframe: {
+            patterns: {
+                dailymotion: {
+                    index: 'dailymotion.com',
+                    id: function (url) {
+                        var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
+                        if (m !== null) {
+                            if (m[4] !== undefined) {
+
+                                return m[4];
+                            }
+                            return m[2];
+                        }
+                        return null;
+                    },
+
+                    src: 'LineLoginAuth.aspx'
+
+                }
+            }
+        }
+
+
+    });
+    */
+
     $(document).on('click', '.popup-modal-dismiss', function (e) {
         e.preventDefault();
         $.magnificPopup.close();
@@ -153,88 +187,61 @@ function setStgPrice() {
         $("#FuturePriceMsg").html('價格合理');
         $("#FuturePerviewPriceBlock .panel").removeClass("panel-red").addClass("panel-green");
     }
+    if (CurrGoodPrice <= 0) {
+        $("#CurrPriceMsg").html('沒有投資價值');
+        $("#CurrPrice").html('N/A');
+    }
+    if (FutureGoodPrice <= 0) {
+        $("#CurrPriceMsg").html('沒有投資價值');
+        $("#FuturePrice").html('N/A');
+    }
 }
 
 function setRiskStatus() {
-/*
+    $("#IsSelfStockMsg3").html("");
+    $("#IsSelfStockMsg2").html("");
+    $("#IsSelfStockMsg").html("");
+
     if (!StockInfoData)
         return;
-
-    var EPSRiskCount = 0;
-    var DiviRiskCount = 0;
-    var OtherRiskCount = 0;
-    $("#IsSelfStockMsg").html('');
-    if (!StockInfoData.IsPromisingEPS)
-        if (StockInfoData.IsPromisingEPS > 0)
-            EPSRiskCount++;
-
-    if (!StockInfoData.IsGrowingUpEPS)
-        if (StockInfoData.IsGrowingUpEPS > 0)
-            EPSRiskCount++;
-
-    if (!StockInfoData.IsAlwaysIncomeEPS)
-        if (StockInfoData.IsAlwaysIncomeEPS > 0)
-            EPSRiskCount++;
-
-    if (!StockInfoData.IsAlwaysPayDivi)
-        if (StockInfoData.IsAlwaysPayDivi > 0)
-            DiviRiskCount++;
-
-    if (!StockInfoData.IsOverDiffDivi)
-        if (StockInfoData.IsOverDiffDivi > 0)
-            DiviRiskCount++;
-
-    if (!StockInfoData.IsSafeDebt)
-        if (StockInfoData.IsSafeDebt > 0)
-            OtherRiskCount++;
-
-    if (!StockInfoData.IsSafePB)
-        if (StockInfoData.IsSafePB > 0)
-            OtherRiskCount++;
-
-    if (!StockInfoData.IsSafeInvestor)
-        if (StockInfoData.IsSafeInvestor > 0)
-            OtherRiskCount++;
-
-    if (!StockInfoData.IsSafeValue)
-        if (StockInfoData.IsSafeValue > 0)
-            OtherRiskCount++;
-
-    $("#IsSelfStockBlock .panel").removeClass("panel-red").removeClass("panel-yellow").removeClass("panel-green");
-
-    console.log(EPSRiskCount)
-    console.log(DiviRiskCount)
-    console.log(OtherRiskCount)
-    if (EPSRiskCount >= 3) {
-        $("#IsSelfStockMsg").append('絕佳獲利能力');
-    } else {
-        $("#IsSelfStockMsg").append('獲利能力:' + (EPSRiskCount) + "/3");
+        
+    if (StockInfoData.Industry === '建材營造業') {
+        $("#IsSelfStockMsg3").append('產業特殊');
     }
 
-    if (DiviRiskCount >= 2) {
-        $("#IsSelfStockMsg2").append('絕佳配股能力');
-    } else {
-        $("#IsSelfStockMsg2").append('配股能力:' + (DiviRiskCount) + "/2");
-    }
+    if (!StockInfoData.EPS_Divi)
+        return;
+    
+    $.each(StockInfoData.EPS_Divi, function (key, value) {
+        if (value.TotalDivi)
+            if (value.TotalDivi <= 0) {
+                $("#IsSelfStockMsg2").html('獲利不穩');
+            }
 
-    if (OtherRiskCount >= 4) {
-        $("#IsSelfStockMsg3").append('安全穩健');
-    } else {
-        $("#IsSelfStockMsg3").append('潛在風險:' + (4 - DiviRiskCount) + "/4");
-    }
+        if (value.TotalEPS)
+            if (value.TotalEPS <= 0) {
+                $("#IsSelfStockMsg").html('營收不穩');
+            }
+    });
 
-    if (EPSRiskCount >= 3 && DiviRiskCount >= 2) {
-        $("#IsSelfStockBlock .panel").addClass("panel-green");
-    } else if (EPSRiskCount == 0 || DiviRiskCount == 0) {
-        $("#IsSelfStockBlock .panel").addClass("panel-red");
-    } else
-        $("#IsSelfStockBlock .panel").addClass("panel-yellow");
-*/
+    $("#IsSelfStockBlock").show();
+
+    if ($("#IsSelfStockMsg3").html() == "")
+        if ($("#IsSelfStockMsg2").html() == "")
+            if ($("#IsSelfStockMsg").html() == "")
+                $("#IsSelfStockBlock").hide();
+
+    $("#IsSelfStockBlock .panel").addClass("panel-yellow");
+
+
+
+
+
+
 }
 
 var StockInfoData = null;
 var doQuery = function (x) {
-    //var targetUrl = 'StockJson/' + x + '.json?t=' + makeid();
     var targetUrl = 'Data/GetStockInfo?StockNum=' + x + '&t=' + makeid();
     $.ajax({
         type: "post",
@@ -274,7 +281,7 @@ var doQuery = function (x) {
             setStockStatus("IsAlwaysIncomeEPS", StockInfoData.IsAlwaysIncomeEPS);
 
             setStockStatus("IsAlwaysPayDivi", StockInfoData.IsAlwaysPayDivi);
-            setStockStatus("IsOverDiffDivi", StockInfoData.IsOverDiffDivi);
+            setStockStatus("IsOverDiffDivi", (StockInfoData.IsOverDiffDivi == 0 ? 1 : 0));
 
             setStockStatus("IsSafeDebt", StockInfoData.IsSafeDebt);
             setStockStatus("IsSafePB", StockInfoData.IsSafePB);
@@ -285,43 +292,43 @@ var doQuery = function (x) {
 
             setStgPrice();
             setRiskStatus();
+            $(".StockStatus").show();
 
             $('.contact ').eq(0).html('<i class="fa fa-phone"></i><h3> 基本資料</h3>');
             $('.contact ').eq(1).html('<i class="fa fa-phone"></i><h3> 年份／股息</h3>');
-            $('.contact ').eq(2).html('<i class="fa fa-phone"></i><h3> 年季／EPS(累計EPS)</h3>');
+            $('.contact ').eq(2).html('<i class="fa fa-phone"></i><h3> 年季／EPS／利息比</h3>');
 
             $('.contact ').eq(0).append('<P>股名: ' + StockInfoData.Name + "</P>");
             $('.contact ').eq(0).append('<P>股價: ' + StockInfoData.Price + "</P>");
             $('.contact ').eq(0).append('<P>產業: ' + StockInfoData.Industry + "</P>");
-            $('.contact ').eq(0).append('<P>本益比(%): ' + StockInfoData.PERatio + "</P>");
-            $('.contact ').eq(0).append('<P>董監持股(%): ' + StockInfoData.InvestorRatio + "</P>");
-            $('.contact ').eq(0).append('<P>負債比(%): ' + StockInfoData.DebtRatio + "</P>");
-            $('.contact ').eq(0).append('<P>市價（億）: ' + StockInfoData.Value + "</P>");
-
+            $('.contact ').eq(0).append('<P>本益比: ' + StockInfoData.PERatio + "</P>");
+            $('.contact ').eq(0).append('<P>大戶持股(%): ' + StockInfoData.InvestorRatio + "</P>");
+            $('.contact ').eq(0).append('<P>負債比: ' + StockInfoData.DebtRatio + "%</P>");
+            $('.contact ').eq(0).append('<P>淨值（億）: ' + StockInfoData.Value + "</P>");
             
             $.each(StockInfoData.EPS_Divi, function (key, value) {
-                $('.contact ').eq(2).append(value.Year + value.LastQ + '／' + value.TotalEPS + '(' + value.EachDiviFromEPS + ')<BR>');
+                $('.contact ').eq(2).append(value.Year + value.LastQ + '／' + value.TotalEPS + '／' + value.EachDiviFromEPS + '<BR>');
                 if (value.LastQ === 'Q4')
                     $('.contact ').eq(1).append(value.Year + value.LastQ + '／' + value.TotalDivi + "<BR>");
             });
+            
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert('通訊異常');
-            //console.warn(xhr.responseText);
         },
         complete: function () {
-            $(".StockStatus").show();
-            $(".StockStatusError").hide();
             $("#preloader").delay(100).fadeOut();
-            //doLog('doReserve finish');
         }
     });
 }
 
 function setErrStatus(msg) {
     $(".StockStatus").hide();
-    $(".StockStatusError").show();
-    $("#StockErrMsg").html(msg);
+    var x = document.getElementById("ToastMsg");
+    $("#ToastMsg").html(msg)
+    $("#ToastMsg").show();
+    x.className = "show";
+    setTimeout(function () { x.className = x.className.replace("show", ""); }, 5000);
 }
 
 function setStockStatus(id, IsOk) {

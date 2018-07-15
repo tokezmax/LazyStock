@@ -26,17 +26,26 @@ namespace LazyStock.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-            /*
-            bundles.Add(new StyleBundle("~/bundles/js").Include(
+
+            bundles.Add(new StyleBundle("~/bundles/css").Include(
+                "~/css/bootstrap.min.css",
+                "~/css/owl.carousel.css",
+                "~/css/owl.theme.default.css",
+                "~/css/magnific-popup.css",
+                "~/css/font-awesome.min.css",
+                "~/css/style.css",
+                "~/css/toast.css"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/js/jquery.min.js",
                 "~/js/bootstrap.min.js",
                 "~/js/owl.carousel.min.js",
                 "~/js/jquery.magnific-popup.js"
+                //, "~/js/main.js" 
             ));
-            */
 
-
-
+               
 
         }
     }

@@ -122,46 +122,16 @@ namespace LazyStock.Web.Models
         /// <summary>
         /// 股息股利(年)
         /// </summary>
-        public List<EPS_Divi> EPS_Divi { get; set; }
+        public List<EPS_DiviDataModel> EPS_Divi { get; set; }
         /// <summary>
         /// 股息資訊
         /// </summary>
-        public List<Dividend> Dividends { get; set; }
+        public List<DividendDataModel> Dividends { get; set; }
 
         /// <summary>
         /// 季EPS
         /// </summary>
-        public List<EP> EPS { get; set; }
+        public List<EPSDataModel> EPS { get; set; }
         #endregion
-    }
-
-    public class EPS_Divi
-    {
-        public int StockNum { get; set; }
-        public string Year { get; set; }
-        public string LastQ { get; set; }
-        public float TotalEPS { get; set; }
-        public float TotalDivi { get; set; }
-        public float EachDiviFromEPS { get; set; }
-    }
-
-    public class Dividend
-    {
-        public int Num { get; set; }
-        public string Year { get; set; }
-        public float CashDivi { get; set; }
-        public float Divi { get; set; }
-        public float AllDivi { get; set; }
-    }
-
-    public class EP
-    {
-        public string Index { get; set; }
-        public int Num { get; set; }
-        public int Year { get; set; }
-        public string Q { get; set; }
-        public float EPS { get; set; }
-        public float KeepEPS { get; set; }
-        public float Quarter3EPSAvg { get; set; }
     }
 }

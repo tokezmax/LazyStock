@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyStock.Web", "LazyStock.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{A3FCF3FC-3FB6-4EB1-8A23-968204D72051}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyStock.Soa", "LazyStock.Soa\LazyStock.Soa.csproj", "{3332582B-15E0-4CE0-87B7-B1DE16F2DE11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LazyStock.ScheduleServices", "LazyStock.ScheduleServices\LazyStock.ScheduleServices.csproj", "{F5EA5C2B-CA50-4487-AD1F-DB4669586C34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{A3FCF3FC-3FB6-4EB1-8A23-968204D72051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3FCF3FC-3FB6-4EB1-8A23-968204D72051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3FCF3FC-3FB6-4EB1-8A23-968204D72051}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3332582B-15E0-4CE0-87B7-B1DE16F2DE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3332582B-15E0-4CE0-87B7-B1DE16F2DE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3332582B-15E0-4CE0-87B7-B1DE16F2DE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3332582B-15E0-4CE0-87B7-B1DE16F2DE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5EA5C2B-CA50-4487-AD1F-DB4669586C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5EA5C2B-CA50-4487-AD1F-DB4669586C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5EA5C2B-CA50-4487-AD1F-DB4669586C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5EA5C2B-CA50-4487-AD1F-DB4669586C34}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

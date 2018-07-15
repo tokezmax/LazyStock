@@ -5,15 +5,18 @@
         Data Source=TOKEZMAX-PC\SQLEXPRESS;Initial Catalog=Stock;Integrated Security=True
       </Stock>
     </ConnectionString>
-    
+
     <AppSettings>
-      <UploadByDeilyURL>http://localhost:2458/Data/UploadByDeily</UploadByDeilyURL>
+      <PowerAdmin>1qaz2wsx0p;/9ol.</PowerAdmin>
+      <ReceiveByDeilyPriceURL>http://lazystock.azurewebsites.net/ImportData/ReceiveByDeilyPrice</ReceiveByDeilyPriceURL>
+      <ReceiveByStockInfoURL>http://lazystock.azurewebsites.net/ImportData/ReceiveByStockInfo</ReceiveByStockInfoURL>
+      <TWSEStockPriceURL>http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&amp;date=@yyyyMMdd&amp;type=ALLBUT0999</TWSEStockPriceURL>
     </AppSettings>
-    
+
     <Package>
-        <Tools.Config>
-            <ConfigDbConnection></ConfigDbConnection>
-        </Tools.Config>
+      <Tools.Config>
+        <ConfigDbConnection></ConfigDbConnection>
+      </Tools.Config>
     </Package>
   </SystemConfig>
 </Config>

@@ -1,4 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="LazyStock.Web._default" %>
+<%@ Import Namespace="System.Web.Optimization" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +14,7 @@
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
-
+    <%--
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
 
@@ -29,7 +30,10 @@
 
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="css/style.css?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>" />
+    <link type="text/css" rel="stylesheet"  href="css/toast.css"/>
+     --%>
 
+    <%:Styles.Render("~/bundles/css") %>
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 9]>
@@ -43,6 +47,8 @@
         enable_page_level_ads: true
       });
     </script>
+
+    
 </head>
 
 <body>
@@ -110,7 +116,7 @@
 							<h1 class="white-text">Lazy Stock</h1>
 							<p class="white-text">我們懶的操股，我們只想花最少的工，獲得最大的勝率<br />當你學會了慢，你獲得的不止是金錢，還有更多的時間</p>
 							<button class="white-btn" id="btnStartNow">立刻使用</button>
-                            <button class="main-btn" id="btnReg" style="display:none">註冊</button>
+                            <button class="main-btn" id="btnReg" style="display:none" >註冊</button>
 						</div>
 					</div>
 					<!-- /home content -->
@@ -135,7 +141,7 @@
 				<!-- Section header -->
 				<div class="section-header text-center">
 					<h2 class="title">簡單．快速．穩健</h2>
-                    巴菲特說再多，也沒辦法幫你選股票~<br />
+                    巴菲特說再多，也沒報名牌給你<br />
 				</div>
 				<!-- /Section header -->
 				<!-- about -->
@@ -206,7 +212,7 @@
 				<!-- Section header -->
 				<div class="section-header text-center">
 					<h2 class="title">真實案例</h2>
-                    我不盯盤，今年戰積12％，你呢？
+                    我不盯盤，穩健獲利，你呢？
 				</div>
 				<!-- /Section header -->
 
@@ -322,7 +328,7 @@
 					<div class="service">
 						<i class="fa fa-rocket"></i>
 						<h3>優質推薦</h3>
-						<p>每日精選優質股票，讓您優雅的投資，優雅的獲利</p>
+						<p>精選優質股票，讓您優雅的投資，優雅的獲利</p>
 					</div>
 				</div>
 				<!-- /service -->
@@ -358,15 +364,15 @@
 				</div>
 				<!-- /service -->
 
-				<!-- service 
+				<!-- service--> 
 				<div class="col-md-4 col-sm-6">
 					<div class="service">
-						<i class="fa fa-flask"></i>
-						<h3>....</h3>
-						<p>努力思考中<br /></p>
+						<i class="fa fa-pencil"></i>
+						<h3>黑名單警示</h3>
+						<p>雞蛋水餃股、信用不良，由我們來把關</p>
 					</div>
 				</div>
-				 /service -->
+				<!--  /service -->
 			</div>
 			<!-- /Row -->
 		</div>
@@ -500,7 +506,7 @@
 	<!-- /Numbers -->
 
 	<!-- Pricing -->
-	<div id="pricing" class="section md-padding">
+	<div id="pricing" class="section md-padding" style="display:none">
 
 		<!-- Container -->
 		<div class="container">
@@ -652,24 +658,11 @@
 							<div class="testimonial-meta">
 								<img src="./img/perso3.jpg" alt="">
 								<h3 class="white-text">徵求合作伙伴</h3>
-								<span>技術研發</span>
+								<span>技術/產品/講師</span>
 							</div>
 							<p class="white-text">
-                                前端後端高端都行,<br />
-                                別害羞，跟我聊聊吧~
-							</p>
-						</div>
-						<!-- /testimonial -->
-                        <!-- testimonial -->
-						<div class="testimonial">
-							<div class="testimonial-meta">
-								<img src="./img/perso4.jpg" alt="">
-								<h3 class="white-text">徵求合作伙伴</h3>
-								<span>產品行銷/講師</span>
-							</div>
-							<p class="white-text">
-                                若您懂產品行銷、社團經營,<br />
-                                還等？找我聊聊~
+                                有投資理財有熱情的伙伴，<br />
+                                別害羞~找我聊聊吧~
 							</p>
 						</div>
 						<!-- /testimonial -->
@@ -790,38 +783,10 @@
                                 <input  class="form-control" placeholder="股票代碼" id="StockNum" maxlength='4'>
                                 <button class="main-btn btn-xs" id="btnQuery" onclick=" return false; ">查詢</button>
                             </div>
-
-
-                            <!--
-                            <div class="col-xs-1"></div>
-                            <div class="col-xs-1">股票代碼</div>
-                            <div class="col-xs-3">
-                                <input type="text" class="input" placeholder="股票代碼" id="StockNum" maxlength='4'>　
-                            </div>
-                            <div class="col-xs-2">期望殖利率</div>
-                            <div class="col-xs-2">
-                                <select id='WishDivi' class="form-control" >
-                                    <option value="0.05">5%</option>
-                                    <option value="0.07">7%</option>
-                                    <option value="0.1">10%</option>
-                                </select>
-                            </div>
-                            <div class="col-xs-2">
-                                <button class="main-btn" id="btnQuery" onclick=" return false; ">查詢</button>
-                            </div>
-                            <div class="ccol-xs-1"></div>
-                            -->
                         </form>
                    </div>
-
-					
-
-                    
-						
-					
 				</div>
 				<!-- /Section-header -->
-
             </div>
 			<!-- /健檢查詢 -->
 
@@ -880,11 +845,11 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="col-lg-3 col-md-3" id="IsSelfStockBlock">
-                                <div class="panel panel-yellow" style="display:none">
+                                <div class="panel panel-yellow" >
                                     <div class="panel-heading">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <i class="fa fa-eye fa-5x"></i>
+                                                <i class="fa fa-info-circle fa-5x"></i>
                                             </div>
                                             <div class="col-xs-9 text-right">
                                                 <div id="IsSelfStockMsg"></div>
@@ -969,12 +934,14 @@
                             <table class="table table-bordered table-responsive">
                                     <tr >
                                         <td class="info">賺的比去年多</td>
-                                        <td ><button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsPromisingEPS"><i class="fa fa-check"></i></button></td>
+                                        <td><button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsPromisingEPS"><i class="fa fa-check"></i></button></td>
                                     </tr>
+
                                     <tr >
                                         <td class="info">獲利持續成長</td>
                                         <td><button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsGrowingUpEPS"><i class="fa fa-check"></i></button></td>
                                     </tr>
+
                                     <tr >
                                         <td class="info">穩健獲利</td>
                                         <td><button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsAlwaysIncomeEPS"><i class="fa fa-check"></i></button></td>
@@ -998,14 +965,14 @@
                             <table class="table table-bordered table-responsive">
                                     <tr >
                                         <td class="info">連續配息</td>
-                                        <td >
-                                            <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup"　id="btnIsAlwaysPayDivi"><i class="fa fa-check"></i></button>
+                                        <td>
+                                            <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsAlwaysPayDivi"><i class="fa fa-check"></i></button>
                                         </td>
                                     </tr>
                                     <tr >
                                         <td class="info">配息穩定性</td>
                                         <td>
-                                            <button type="button" class="btn btn-danger btn-circle StockStatusBtnGroup"　id="btnIsOverDiffDivi"><i class="fa fa-times"></i></button>
+                                            <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsOverDiffDivi"><i class="fa fa-check"></i></button>
                                         </td>
                                     </tr>
                             </table>
@@ -1025,28 +992,29 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                                 <table class="table table-bordered table-responsive">
+
                                         <tr >
                                             <td class="info">公司市值(>30億）</td>
-                                            <td >
-                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup"　id="btnIsSafeValue"><i class="fa fa-check"></i></button>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsSafeValue"><i class="fa fa-check"></i></button>
                                             </td>
                                         </tr>
                                         <tr >
                                             <td class="info">本益比(=<20）</td>
-                                            <td >
-                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup"　id="btnIsSafePB"><i class="fa fa-check"></i></button>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsSafePB"><i class="fa fa-check"></i></button>
                                             </td>
                                         </tr>
                                         <tr >
                                             <td class="info">大戶持股(>= 25%)</td>
-                                            <td >
-                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup"　id="btnIsSafeInvestor"><i class="fa fa-check"></i></button>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsSafeInvestor"><i class="fa fa-check"></i></button>
                                             </td>
                                         </tr>
                                         <tr >
                                             <td class="info">負債比 (<= 55%)</td>
-                                            <td >
-                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup"　id="btnIsSafeDebt"><i class="fa fa-check"></i></button>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsSafeDebt"><i class="fa fa-check"></i></button>
                                             </td>
                                         </tr>
                                 </table>
@@ -1159,14 +1127,37 @@
 		</div>
 	</div>
 	<!-- /Preloader -->
+    
+
+    <div id="ToastMsg" >Some text some message..</div>
+
 
 	<!-- jQuery Plugins -->
-	<script type="text/javascript" src="js/jquery.min.js"></script>
+    <%:Scripts.Render("~/bundles/js") %>
+	<%--
+    <script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
-	<script type="text/javascript" src="js/main.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
+    --%>
 
+    <script type="text/javascript" src="js/main.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
+
+            function Auth(){ 
+            var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
+            URL += 'response_type=code';
+            URL += '&client_id=1593644840';  //請換成你自己的 client_id
+            URL += '&redirect_uri=http://localhost:2458/Member/CallbackFromLine'; //請換成你自己的 callback url
+            URL += '&scope=openid%20profile';
+            URL += '&state=abcde';
+            //導引到LineLogin
+            //window.location.href = URL;
+            document.getElementById('search_iframe').src = URL;
+            //document.getElementById['search_iframe'].src = 'http://localhost:2458/default.aspx'
+
+            window.open(URL, '新視窗的名稱', config='height=1024px,width=1024px,toolbar=no,scrollbars=no,resizable=no,location=no,status=no,menubar=no');
+        }
+    
 </body>
 
 </html>

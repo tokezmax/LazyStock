@@ -20,7 +20,7 @@ namespace LazyStock.Web.Controllers
     public class SettingController : Controller
     {
         //實體檔案路徑
-        public static String StockFileLocalDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\StockJson\";
+        public static String StockFileLocalDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\";
 
         public ActionResult SetOption(String Key,String Val)
         {
@@ -40,6 +40,58 @@ namespace LazyStock.Web.Controllers
 
                 result.Code = ResponseCodeEnum.Success;
                 result.Message = "[Key]" + Key + "[Val]" + Val;
+            }
+            catch (Exception e)
+            {
+                result.Code = ResponseCodeEnum.Failed;
+                result.Message = e.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Query(String Groups, String Category, String Keys)
+        {
+            BaseResModel result = new BaseResModel();
+
+            try
+            {
+                Common.Tools.AuthHelper.IsPowerAdmin(Request);
+                Common.Tools.Setting.GetConfig(Groups, Category, Keys);
+                result.Code = ResponseCodeEnum.Success;
+                result.Result = Common.Tools.Setting.GetConfig(Groups, Category, Keys);
+            }
+            catch (Exception e)
+            {
+                result.Code = ResponseCodeEnum.Failed;
+                result.Message = e.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Update(String Groups, String Category, String Keys, String Value)
+        {
+            BaseResModel result = new BaseResModel();
+            
+            try {
+                Common.Tools.AuthHelper.IsPowerAdmin(Request);
+                Common.Tools.Setting.SetConfig(Groups, Category, Keys, Value);
+                result.Code = ResponseCodeEnum.Success;
+            }
+            catch (Exception e)
+            {
+                result.Code = ResponseCodeEnum.Failed;
+                result.Message = e.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult Load()
+        {
+            BaseResModel result = new BaseResModel();
+
+            try
+            {
+                Common.Tools.AuthHelper.IsPowerAdmin(Request);
+                Common.Tools.Setting.ReLoad();
+                result.Code = ResponseCodeEnum.Success;
             }
             catch (Exception e)
             {
