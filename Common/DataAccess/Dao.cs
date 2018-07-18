@@ -589,32 +589,32 @@ namespace Common.DataAccess
 
 
 
-        ///// <summary>
-        ///// Single Sql Command execution
-        ///// </summary>
-        ///// <param name="SqlCommand">Sql Command</param>
-        ///// <param name="Parameters">Parameters</param>
-        ///// <param name="ConnectionString">Connection String</param>
-        ///// <returns>rows affected</returns>
-        //private static int Execute(string SqlCommand, ArrayList Parameters, string ConnectionString)
-        //{
-        //    try
-        //    {
-        //        using (SqlConnection conn = new SqlConnection(ConnectionString))
-        //        {
-        //            conn.Open();
+        /// <summary>
+        /// single sql command execution
+        /// </summary>
+        /// <param name="sqlcommand">sql command</param>
+        /// <param name="parameters">parameters</param>
+        /// <param name="connectionstring">connection string</param>
+        /// <returns>rows affected</returns>
+        public static int execute(string sqlcommand, ArrayList parameters, string connectionstring)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionstring))
+                {
+                    conn.Open();
 
-        //            SqlCommand MyCommand = new SqlCommand(SqlCommand, conn);
-        //            MyCommand.CommandTimeout = 0;
-        //            MyCommand.Parameters.AddRange(Parameters.ToArray());
-        //            return MyCommand.ExecuteNonQuery();
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("[Dao.Execute]" + ex.Message);
-        //    }
-        //}
+                    SqlCommand mycommand = new SqlCommand(sqlcommand, conn);
+                    mycommand.CommandTimeout = 0;
+                    mycommand.Parameters.AddRange(parameters.ToArray());
+                    return mycommand.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("[dao.execute]" + ex.Message);
+            }
+        }
 
         ///// <summary>
         ///// Multi-Sql Command execution

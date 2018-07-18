@@ -40,16 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\DividendDataModel.cs" />
-    <Compile Include="Data\EPSDataModel.cs" />
-    <Compile Include="Data\EPS_DiviDataModel.cs" />
-    <Compile Include="Data\StockPriceDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Req\Base\BaseReqModel.cs" />
-    <Compile Include="Req\ReceiveByDeilyPriceReqModel.cs" />
-    <Compile Include="Req\ReceiveByStockInfoReqModel.cs" />
-    <Compile Include="Res\Base\BaseResModel.cs" />
-    <Compile Include="Res\StockInfoReqModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Data\" />
+    <Folder Include="Req\Base\" />
+    <Folder Include="Res\Base\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

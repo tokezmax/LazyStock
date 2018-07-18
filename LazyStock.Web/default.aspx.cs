@@ -1,3 +1,4 @@
+using LazyStock.Web.Services;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,7 +11,9 @@ namespace LazyStock.Web
  
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack) {
+                
+            }
         }
       
         protected override void Render(HtmlTextWriter writer)

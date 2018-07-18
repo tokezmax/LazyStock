@@ -124,7 +124,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CallbackFromLineLogin.aspx" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\magnific-popup.css" />
@@ -147,6 +146,19 @@
     <Content Include="img\blog2.jpg" />
     <Content Include="img\blog3.jpg" />
     <Content Include="img\LazyStockLogo5.png" />
+    <Content Include="img\line\44dp\btn_base.png" />
+    <Content Include="img\line\44dp\btn_hover.png" />
+    <Content Include="img\line\44dp\btn_login_base.png" />
+    <Content Include="img\line\44dp\btn_login_hover.png" />
+    <Content Include="img\line\44dp\btn_login_press.png" />
+    <Content Include="img\line\44dp\btn_press.png" />
+    <Content Include="img\line\44dp\line_44.png" />
+    <Content Include="img\line\btn_base.png" />
+    <Content Include="img\line\btn_hover.png" />
+    <Content Include="img\line\btn_login_base.png" />
+    <Content Include="img\line\btn_login_hover.png" />
+    <Content Include="img\line\btn_login_press.png" />
+    <Content Include="img\line\btn_press.png" />
     <Content Include="img\perso1.jpg" />
     <Content Include="img\perso2.jpg" />
     <Content Include="img\perso3.jpg" />
@@ -165,11 +177,26 @@
     <Content Include="img\work6.jpg" />
     <Content Include="img\work7.png" />
     <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\Common.js" />
     <Content Include="js\jquery.magnific-popup.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\main.js" />
     <Content Include="js\owl.carousel.min.js" />
+    <Content Include="js\AjaxSender.js" />
     <Content Include="LineLoginAuth.aspx" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -180,10 +207,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="CallbackFromLineLogin.aspx.cs">
-      <DependentUpon>CallbackFromLineLogin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="CacheData\MemberInfoDataCache.cs" />
     <Compile Include="Controllers\DataController.cs" />
     <Compile Include="Controllers\ImportDataController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
@@ -199,10 +223,11 @@
       <DependentUpon>LineLoginAuth.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Models\Api\Data\DDOSModel.cs" />
     <Compile Include="Models\Api\Data\DividendDataModel.cs" />
     <Compile Include="Models\Api\Data\EPSDataModel.cs" />
     <Compile Include="Models\Api\Data\EPS_DiviDataModel.cs" />
-    <Compile Include="Models\Api\Data\MemberInfo.cs" />
+    <Compile Include="Models\Api\Data\MemberInfoModel.cs" />
     <Compile Include="Models\Api\Data\StockPriceDataModel.cs" />
     <Compile Include="Models\Api\Enum\ResponseCodeEnum.cs" />
     <Compile Include="Models\Api\Req\Base\BaseReqModel.cs" />
@@ -212,6 +237,7 @@
     <Compile Include="Models\Api\Res\Base\BaseResModel.cs" />
     <Compile Include="Models\SystemOptionModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthServcies.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -226,6 +252,7 @@
     <None Include="Properties\PublishProfiles\ChatBotTest20180526 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\LazyStock - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\LazyStock - Web Deploy.pubxml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

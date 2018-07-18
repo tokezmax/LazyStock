@@ -41,12 +41,11 @@ namespace LazyStock.Web
                 "~/js/jquery.min.js",
                 "~/js/bootstrap.min.js",
                 "~/js/owl.carousel.min.js",
-                "~/js/jquery.magnific-popup.js"
-                //, "~/js/main.js" 
+                "~/js/jquery.magnific-popup.js",
+                "~/Scripts/jquery.cookie.js"
+                , "~/js/Common.js"
+                , "~/js/main.js"
             ));
-
-               
-
         }
     }
 }

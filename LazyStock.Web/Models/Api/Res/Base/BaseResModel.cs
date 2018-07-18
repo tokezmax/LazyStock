@@ -7,7 +7,7 @@ using Common.Tools;
 
 namespace LazyStock.Web.Models
 {
-    public class BaseResModel
+    public class BaseResModel<T>
     {
         private string _Message;
 
@@ -34,6 +34,6 @@ namespace LazyStock.Web.Models
             }
         }
         [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
-        public object Result { get; set; }
+        public T Result { get; set; }
     }
 }

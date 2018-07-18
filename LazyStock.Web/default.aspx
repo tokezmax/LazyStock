@@ -87,18 +87,19 @@
 					<li><a href="#about" id="btnAbout">關於</a></li>
 					<li><a href="#portfolio">案例</a></li>
 					<li><a href="#service">服務</a></li>
-					<li><a href="#pricing">售價</a></li>
-
-					
                     <!--
+                        <li><a href="#pricing">售價</a></li>
                         <li><a href="#team">團隊</a></li>
-					<li class="has-dropdown"><a href="#blog">Blog</a>
+					    <li class="has-dropdown"><a href="#blog">Blog</a>
 						<ul class="dropdown">
 							<li><a href="blog-single.html">blog post</a></li>
 						</ul>
 					</li>
                     -->
 					<li ><a href="#contact" id="alinkGoContact">點我試用</a></li>
+                    <li ><a href="LineLoginAuth.aspx" id="LineAuth">
+                        <img src="img/line/btn_login_base.png?ad=sdr4d" />
+                        </a></li>
 				</ul>
 				<!-- /Main navigation -->
 
@@ -451,7 +452,7 @@
 		<!-- /Background Image -->
 
 		<!-- Container -->
-		<div class="container">
+		<div class="container" style="display:none">
 
 			<!-- Row -->
 			<div class="row">
@@ -806,7 +807,9 @@
                                     <td id="StockInfoIndustry"></td>
                                 </tr>
                                 <tr >
-                                    <td class="info">收盤價</td>
+                                    <td class="info">收盤價&nbsp;
+                                        <button id="PriceModifyDate" type="button" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Tooltip on top" >!</button>
+                                    </td>
                                     <td id="StockInfoPrice"></td>
                                     <td class="info">當年殖利率</td>
                                     <td id="StockInfoCurrDivi"></td>
@@ -823,17 +826,16 @@
 			<!-- /基本資料 -->
 
             <!-- 風檢指標 -->
-            <div class="row StockStatus" >
-			
+            <div class="row StockStatus" id="StockStgBlock">
 				<div class="panel panel-primary">
                     <div class="panel-heading">
                         <form class="form-inline" role="form">
                             <div class="form-group">
                                 <label for="email">進場策略　(期望殖利率：</label>
                                 <select id='WishDivi' class="form-control" >
-                                    <option value="0.05">5%</option>
-                                    <option value="0.07">7%</option>
-                                    <option value="0.1">10%</option>
+                                    <option value="5">5%</option>
+                                    <option value="7">7%</option>
+                                    <option value="10">10%</option>
                                 </select>
                                 <label for="email">)</label>
                             </div>                        
@@ -915,9 +917,20 @@
                         </div>
                         <div class="col-lg-4 col-md-4"></div>
                             </div>
-                        </div>
+                </div>
+            </div>
 
-                
+            <div class="row StockStatus" id="PleaseLoginBlock">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <form class="form-inline" role="form">
+                            <div class="form-group">
+                                <label for="email">想看進場策略？</label>
+                                <a href="LineLoginAuth.aspx" id="LineAuth2"><img src="img/line/44dp/btn_login_base.png" /></a>
+                            </div>                        
+                        </form>
+                    </div>
+                </div>
             </div>
             <!-- /風檢指標 -->            
 
@@ -972,7 +985,7 @@
                                     <tr >
                                         <td class="info">配息穩定性</td>
                                         <td>
-                                            <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsOverDiffDivi"><i class="fa fa-check"></i></button>
+                                            <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsStableDivi"><i class="fa fa-check"></i></button>
                                         </td>
                                     </tr>
                             </table>
@@ -1015,6 +1028,13 @@
                                             <td class="info">負債比 (<= 55%)</td>
                                             <td>
                                                 <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsSafeDebt"><i class="fa fa-check"></i></button>
+                                            </td>
+                                        </tr>
+                                        <tr >
+                                            <td class="info">營收成長比 &nbsp;
+                                                <button id="RevenueGrowthRatio" type="button" class="btn btn-warning btn-xs" data-toggle="tooltip" data-placement="top" title="Tooltip on top" >i</button></td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-circle StockStatusBtnGroup" id="btnIsGrowingUpRevenue"><i class="fa fa-check"></i></button>
                                             </td>
                                         </tr>
                                 </table>
@@ -1139,24 +1159,13 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
+    <script type="text/javascript" src="js/Common.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
+    <script type="text/javascript" src="js/main.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
     --%>
 
-    <script type="text/javascript" src="js/main.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
-
-            function Auth(){ 
-            var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
-            URL += 'response_type=code';
-            URL += '&client_id=1593644840';  //請換成你自己的 client_id
-            URL += '&redirect_uri=http://localhost:2458/Member/CallbackFromLine'; //請換成你自己的 callback url
-            URL += '&scope=openid%20profile';
-            URL += '&state=abcde';
-            //導引到LineLogin
-            //window.location.href = URL;
-            document.getElementById('search_iframe').src = URL;
-            //document.getElementById['search_iframe'].src = 'http://localhost:2458/default.aspx'
-
-            window.open(URL, '新視窗的名稱', config='height=1024px,width=1024px,toolbar=no,scrollbars=no,resizable=no,location=no,status=no,menubar=no');
-        }
+    
+    
+    
     
 </body>
 

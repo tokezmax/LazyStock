@@ -22,8 +22,19 @@ namespace LazyStock.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Common.Tools.Setting.ReLoad();
-            Common.DataAccess.Dao.LoadTables();
+            try
+            {
+                //_logger.Trace("[Application_Init]start");
+
+                Common.Tools.Setting.ReLoad();
+                //Common.DataAccess.Dao.LoadTables();
+                
+            }
+            catch// (Exception ex)
+            {
+                //_logger.Trace("[Application_Init]" + ex.Message);
+            }
+
         }
     }
 }

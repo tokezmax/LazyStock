@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
 
-namespace LazyStock.Models
+namespace LazyStock.ScheduleServices.Model
 {
     public class BaseReqModel
     {

@@ -1,0 +1,26 @@
+﻿<Config>
+  <SystemConfig>
+    <ConnectionString>
+      <Stock>
+        Data Source=TOKEZMAX-PC\SQLEXPRESS;Initial Catalog=Stock;Integrated Security=True
+      </Stock>
+    </ConnectionString>
+
+    <AppSettings>
+      <PowerAdmin>1qaz2wsx0p;/9ol.</PowerAdmin>
+      <RunSec>3600</RunSec>
+      <ReceiveByDeilyPriceURL>http://localhost:2458/ImportData/ReceiveByDeilyPrice</ReceiveByDeilyPriceURL>
+      <ReceiveByStockInfoURL>http://localhost:2458/ImportData/ReceiveByStockInfo</ReceiveByStockInfoURL>
+      <TWSEStockPriceURL>http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&amp;date=@yyyyMMdd&amp;type=ALLBUT0999</TWSEStockPriceURL>
+      <TPEXStockPriceURL>http://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&amp;d=@yyyMMdd&amp;se=EW&amp;_=1531643107473</TPEXStockPriceURL>
+      <GTSMStockPriceURL>http://www.tpex.org.tw//storage/emgstk/ch/new.csv?t=@t</GTSMStockPriceURL>
+      <SpecifiedDate></SpecifiedDate>
+    </AppSettings>
+
+    <Package>
+      <Tools.Config>
+        <ConfigDbConnection></ConfigDbConnection>
+      </Tools.Config>
+    </Package>
+  </SystemConfig>
+</Config>

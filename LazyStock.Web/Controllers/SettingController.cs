@@ -24,7 +24,7 @@ namespace LazyStock.Web.Controllers
 
         public ActionResult SetOption(String Key,String Val)
         {
-            BaseResModel result = new BaseResModel();
+            BaseResModel<Object> result = new BaseResModel<Object>();
             try
             {
                 // Open database (or create if not exits)
@@ -51,7 +51,7 @@ namespace LazyStock.Web.Controllers
 
         public ActionResult Query(String Groups, String Category, String Keys)
         {
-            BaseResModel result = new BaseResModel();
+            BaseResModel<Object> result = new BaseResModel<Object>();
 
             try
             {
@@ -69,7 +69,7 @@ namespace LazyStock.Web.Controllers
         }
         public ActionResult Update(String Groups, String Category, String Keys, String Value)
         {
-            BaseResModel result = new BaseResModel();
+            BaseResModel<Object> result = new BaseResModel<Object>();
             
             try {
                 Common.Tools.AuthHelper.IsPowerAdmin(Request);
@@ -85,7 +85,7 @@ namespace LazyStock.Web.Controllers
         }
         public ActionResult Load()
         {
-            BaseResModel result = new BaseResModel();
+            BaseResModel<Object> result = new BaseResModel<Object>();
 
             try
             {

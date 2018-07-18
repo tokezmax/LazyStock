@@ -7,6 +7,7 @@ using Common.Extensions;
 using Newtonsoft.Json;
 using LazyStock.Web.Models;
 using System.Collections;
+using LazyStock.Web.Services;
 using LiteDB;
 
 namespace LazyStock.Web.Controllers
@@ -15,29 +16,8 @@ namespace LazyStock.Web.Controllers
     {
 
         //實體檔案路徑
-        //public static String StockFileLocalDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\StockJson\";
         public static String LazyStockDBPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\LazyStockDB.db";
 
-
-        #region 測試用
-        /// <summary>
-        /// 測試用
-        /// </summary>
-        /// <returns></returns>
-        /*
-        [HttpGet]
-        public ActionResult GenData()
-        {
-            //string ExecSQL = @"exec [GetStockInfo] ''";
-            //取得
-            List<StockInfoResModel> StockInfos = new List<StockInfoResModel>();
-            Hashtable Conditions = new Hashtable();
-            Conditions.Add("StockNum", "");
-            int result = Common.DataAccess.Dao.EditUSP("GetStockInfo", Conditions, Common.Tools.Setting.ConnectionString("Stock"));
-            return Json(result, JsonRequestBehavior.AllowGet);
-        }
-        */
-        #endregion
 
         #region 對外服務
 
@@ -48,22 +28,36 @@ namespace LazyStock.Web.Controllers
         /// <returns></returns>
         public ActionResult GetStockInfo(String StockNum)
         {
-            BaseResModel result = new BaseResModel();
+            BaseResModel<StockInfoResModel> result = new BaseResModel<StockInfoResModel>();
 
             try
             {
-                
-                int _StockNum = Int32.Parse(StockNum);
-                    
+                if (AuthServcies.IsOverQuery(Request))
+                    throw new Exception("查詢過於繁複，請稍候再試!");
+
                 using (var db = new LiteDatabase(LazyStockDBPath))
                 {
                     // Get customer collection
                     var StockInfos = db.GetCollection<StockInfoResModel>("StockInfo");
-                    var StockInfo = StockInfos.FindById(_StockNum);
+                    var StockInfo = StockInfos.FindById(StockNum);
                     if (StockInfo == null)
-                        return Json(new BaseResModel() { Code = ResponseCodeEnum.DataNotFound }, JsonRequestBehavior.AllowGet);
+                        return Json(new BaseResModel<StockInfoResModel>() { Code = ResponseCodeEnum.DataNotFound }, JsonRequestBehavior.AllowGet);
 
                     result.Result = StockInfo;
+
+                    if (!AuthServcies.Islogin(Request)) {
+                        result.Result.CurrFromEPS = null;
+                        result.Result.FutureFromEPS = null;
+                        result.Result.PrevDiviFrom3YearAvgByEPS = null;
+                        result.Result.EstimateStableDivi = null;
+                        result.Result.EstimateUnstableDivi = null;
+                        result.Result.EstimateStablePrice5 = null;
+                        result.Result.EstimateUnstablePrice5 = null;
+                        result.Result.EstimateStablePrice7 = null;
+                        result.Result.EstimateUnstablePrice7 = null;
+                        result.Result.EstimateStablePrice10 = null;
+                        result.Result.EstimateUnstablePrice10 = null;
+                    }
                 }
             }
             catch (Exception e)

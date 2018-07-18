@@ -12,7 +12,7 @@
       <ReceiveByStockInfoURL>http://lazystock.azurewebsites.net/ImportData/ReceiveByStockInfo</ReceiveByStockInfoURL>
       <TWSEStockPriceURL>http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&amp;date=@yyyyMMdd&amp;type=ALLBUT0999</TWSEStockPriceURL>
     </AppSettings>
-
+    
     <Package>
       <Tools.Config>
         <ConfigDbConnection></ConfigDbConnection>

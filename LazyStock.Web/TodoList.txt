@@ -9,6 +9,26 @@
    >>極積樹懶，新增產品項
 
 
-   (9)欄位顯示問題：
-   年季/EPS(累計EPS) ←標題有誤
-   年/累計EPS/利息比
+
+--基本資料(年)
+http://mops.twse.com.tw/mops/web/t51sb01
+
+--(財報相關)(季)營益分析彙總表
+http://mops.twse.com.tw/mops/web/t163sb06
+
+--(財報相關)(季)資產負債彙總表
+http://mops.twse.com.tw/mops/web/t163sb06
+
+--(財報相關)(季)綜合損益彙總表
+http://mops.twse.com.tw/mops/web/t163sb06
+
+--(財報相關)(年)
+http://mops.twse.com.tw/mops/web/t51sb02_q1
+
+--(除權息資訊)(日)
+http://mops.twse.com.tw/mops/web/t108sb27
+
+--(營收報表)(月)
+資料來源：http://mops.twse.com.tw/mops/web/t21sc04_ifrs
+資料類型：html
+範例：http://mops.twse.com.tw/nas/t21/sii/t21sc03_107_6_0.html

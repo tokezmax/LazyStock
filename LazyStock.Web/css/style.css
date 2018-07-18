@@ -1770,19 +1770,19 @@ header {
     border-color: #5cb85c;
 }
 
-    .panel-green > .panel-heading {
-        border-color: #5cb85c;
-        color: white;
-        background-color: #5cb85c;
-    }
+.panel-green > .panel-heading {
+    border-color: #5cb85c;
+    color: white;
+    background-color: #5cb85c;
+}
 
-    .panel-green > a {
-        color: #5cb85c;
-    }
+.panel-green > a {
+    color: #5cb85c;
+}
 
-        .panel-green > a:hover {
-            color: #3d8b3d;
-        }
+.panel-green > a:hover {
+    color: #3d8b3d;
+}
 
 .panel-red {
     border-color: #d9534f;

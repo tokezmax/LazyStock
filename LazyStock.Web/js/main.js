@@ -124,50 +124,38 @@
         }]
     });
     
-
-    /*
-    $('#btnReg').magnificPopup({
-        type: 'iframe',
-        iframe: {
-            patterns: {
-                dailymotion: {
-                    index: 'dailymotion.com',
-                    id: function (url) {
-                        var m = url.match(/^.+dailymotion.com\/(video|hub)\/([^_]+)[^#]*(#video=([^_&]+))?/);
-                        if (m !== null) {
-                            if (m[4] !== undefined) {
-
-                                return m[4];
-                            }
-                            return m[2];
-                        }
-                        return null;
-                    },
-
-                    src: 'LineLoginAuth.aspx'
-
-                }
-            }
-        }
-
-
-    });
-    */
-
     $(document).on('click', '.popup-modal-dismiss', function (e) {
         e.preventDefault();
         $.magnificPopup.close();
-    });
 
+
+        
+
+    });
+    
+    $(document).ready(function () {
+        AuthControll();
+    });
 })(jQuery);
 
+var CommonHelper = new Common();
+var StockInfoData = null;
 
 function setStgPrice() {
+    $("#StockStgBlock").hide();
+    $("#PleaseLoginBlock").show();
+    if (_u) 
+        if (_u.Permission == "1") { 
+            $("#StockStgBlock").show();
+            $("#PleaseLoginBlock").hide();
+        }
+
     if (!StockInfoData)
         return;
-    var WishDivi = parseFloat($("#WishDivi").val());
-    var CurrGoodPrice = Math.floor(parseFloat((parseFloat((StockInfoData.CurrFromEPS * StockInfoData.PrevDiviFrom3YearAvgByEPS) / WishDivi))) * 100) / 100;
-    var FutureGoodPrice = Math.floor(parseFloat((parseFloat((StockInfoData.FutureFromEPS * StockInfoData.PrevDiviFrom3YearAvgByEPS) / WishDivi))) * 100) / 100;
+    var WishRatio = $("#WishDivi").val();
+    var CurrGoodPrice = CommonHelper.RoundX(StockInfoData["EstimateStablePrice" + WishRatio],2);
+    var FutureGoodPrice = CommonHelper.RoundX(StockInfoData["EstimateUnstablePrice" + WishRatio], 2);
+
     $("#CurrPrice").html(CurrGoodPrice);
     $("#FuturePrice").html(FutureGoodPrice);
 
@@ -217,12 +205,10 @@ function setRiskStatus() {
             if (value.TotalDivi <= 0) {
                 $("#IsSelfStockMsg2").html('獲利不穩');
             }
-
-        if (value.TotalEPS)
-            if (value.TotalEPS <= 0) {
-                $("#IsSelfStockMsg").html('營收不穩');
-            }
     });
+
+    if (StockInfoData.IsUnstableEPS)
+        $("#IsSelfStockMsg").html('EPS不穩定');
 
     $("#IsSelfStockBlock").show();
 
@@ -232,17 +218,10 @@ function setRiskStatus() {
                 $("#IsSelfStockBlock").hide();
 
     $("#IsSelfStockBlock .panel").addClass("panel-yellow");
-
-
-
-
-
-
 }
 
-var StockInfoData = null;
 var doQuery = function (x) {
-    var targetUrl = 'Data/GetStockInfo?StockNum=' + x + '&t=' + makeid();
+    var targetUrl = 'Data/GetStockInfo?StockNum=' + x + '&t=' + CommonHelper.GenRandom(5);
     $.ajax({
         type: "post",
         url: targetUrl,
@@ -264,9 +243,11 @@ var doQuery = function (x) {
                 return;
             }
             StockInfoData = data.Result;
-
-            $("#StockInfoNum").html(StockInfoData.Num);
-            $("#StockInfoName").html(StockInfoData.Name);
+            
+            $("#RevenueGrowthRatio").attr("title", "["+StockInfoData.RevenueYYYYMM + "]累計:" + StockInfoData.RevenueGrowthRatio+"%");
+            $("#PriceModifyDate").attr("title","最後更新時間:"+StockInfoData.PriceModifyDate);
+            $("#StockInfoNum").html(StockInfoData.StockNum);
+            $("#StockInfoName").html(StockInfoData.StockName);
             $("#StockInfoIndustry").html(StockInfoData.Industry);
             $("#StockInfoPrice").html(StockInfoData.Price);
             //取得去年Divi
@@ -276,12 +257,15 @@ var doQuery = function (x) {
             CurrDivi = Math.floor(CurrDivi * 10000)/100;
             $("#StockInfoCurrDivi").html(CurrDivi).append('%');
 
+            
+            setStockStatus("IsGrowingUpRevenue", StockInfoData.IsGrowingUpRevenue);
+
             setStockStatus("IsPromisingEPS", StockInfoData.IsPromisingEPS);
             setStockStatus("IsGrowingUpEPS", StockInfoData.IsGrowingUpEPS );
             setStockStatus("IsAlwaysIncomeEPS", StockInfoData.IsAlwaysIncomeEPS);
 
             setStockStatus("IsAlwaysPayDivi", StockInfoData.IsAlwaysPayDivi);
-            setStockStatus("IsOverDiffDivi", (StockInfoData.IsOverDiffDivi == 0 ? 1 : 0));
+            setStockStatus("IsStableDivi", StockInfoData.IsStableDivi);
 
             setStockStatus("IsSafeDebt", StockInfoData.IsSafeDebt);
             setStockStatus("IsSafePB", StockInfoData.IsSafePB);
@@ -289,16 +273,16 @@ var doQuery = function (x) {
             setStockStatus("IsSafeValue", StockInfoData.IsSafeValue);
 
             
-
+            $(".StockStatus").show();
             setStgPrice();
             setRiskStatus();
-            $(".StockStatus").show();
+            
 
             $('.contact ').eq(0).html('<i class="fa fa-phone"></i><h3> 基本資料</h3>');
             $('.contact ').eq(1).html('<i class="fa fa-phone"></i><h3> 年份／股息</h3>');
             $('.contact ').eq(2).html('<i class="fa fa-phone"></i><h3> 年季／EPS／利息比</h3>');
 
-            $('.contact ').eq(0).append('<P>股名: ' + StockInfoData.Name + "</P>");
+            $('.contact ').eq(0).append('<P>股名: ' + StockInfoData.StockName + "</P>");
             $('.contact ').eq(0).append('<P>股價: ' + StockInfoData.Price + "</P>");
             $('.contact ').eq(0).append('<P>產業: ' + StockInfoData.Industry + "</P>");
             $('.contact ').eq(0).append('<P>本益比: ' + StockInfoData.PERatio + "</P>");
@@ -307,7 +291,7 @@ var doQuery = function (x) {
             $('.contact ').eq(0).append('<P>淨值（億）: ' + StockInfoData.Value + "</P>");
             
             $.each(StockInfoData.EPS_Divi, function (key, value) {
-                $('.contact ').eq(2).append(value.Year + value.LastQ + '／' + value.TotalEPS + '／' + value.EachDiviFromEPS + '<BR>');
+                $('.contact ').eq(2).append(value.Year + value.LastQ + '／' + CommonHelper.RoundX(value.TotalEPS, 2) + '／' + (value.EachDiviFromEPS == null ? 0 : +value.EachDiviFromEPS) +'<BR>');
                 if (value.LastQ === 'Q4')
                     $('.contact ').eq(1).append(value.Year + value.LastQ + '／' + value.TotalDivi + "<BR>");
             });
@@ -346,12 +330,25 @@ function setStockStatus(id, IsOk) {
 
 }
 
-function makeid() {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+var _u;
+function AuthControll() {
+    //$("#StockStgBlock").hide();
+    //$("#PleaseLoginBlock").show();
+    _u = $.cookie('_UserInfo');
 
-    for (var i = 0; i < 5; i++)
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    if (!_u) return;
+    if (_u==="null") return;
 
-    return text;
+    if (_u) {
+        _u = JSON.parse($.cookie('_UserInfo'));
+
+        $("#LineAuth >img").attr("src", _u.PicUrl + "?ad=" + CommonHelper.GenRandom(4)).css({ "height": "25px"});
+        $("#LineAuth").append("&nbsp; Hi~" + _u.UserName);
+        $("#LineAuth").attr("href", "javascript:logout();")
+        //$("#PleaseLoginBlock").hide();
+    } 
+}        
+function logout() {
+    $.cookie('_UserInfo', null);
+    location.reload()
 }
