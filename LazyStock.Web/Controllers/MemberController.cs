@@ -66,7 +66,7 @@ namespace LazyStock.Web.Controllers
 
             String v = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(member)));
             
-            return Redirect("/?v="+v);
+            return Redirect(Common.Tools.Setting.AppSettings("LineAuthAfterRedirect") +"/?v=" +v);
         }
 
     }
