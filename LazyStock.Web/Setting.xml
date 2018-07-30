@@ -11,6 +11,15 @@
       <ReceiveByDeilyPriceURL>http://lazystock.azurewebsites.net/ImportData/ReceiveByDeilyPrice</ReceiveByDeilyPriceURL>
       <ReceiveByStockInfoURL>http://lazystock.azurewebsites.net/ImportData/ReceiveByStockInfo</ReceiveByStockInfoURL>
       <TWSEStockPriceURL>http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&amp;date=@yyyyMMdd&amp;type=ALLBUT0999</TWSEStockPriceURL>
+      <LineAuthCallBackUrlX>https://lazystock.azurewebsites.net/Member/CallbackFromLine</LineAuthCallBackUrlX>
+      <LineAuthIdX>1593644840</LineAuthIdX>
+      <LineAuthClientSecretX>760934e2ecec09b4e73af7f18a0abfcc</LineAuthClientSecretX>
+      
+      <LineAuthCallBackUrl>http://localhost:2458/Member/CallbackFromLine</LineAuthCallBackUrl>
+      <LineAuthId>1595672622</LineAuthId>
+      <LineAuthClientSecret>9ea78245156190a518416a2a1ba2ac2d</LineAuthClientSecret>
+      
+      <QueryStockInfoCount>10</QueryStockInfoCount>
     </AppSettings>
     
     <Package>

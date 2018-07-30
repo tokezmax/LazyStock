@@ -8,14 +8,20 @@
 
     <AppSettings>
       <PowerAdmin>1qaz2wsx0p;/9ol.</PowerAdmin>
-	  <RunSec>3600</RunSec>
+      <RunSec>3600</RunSec>
       <ReceiveByDeilyPriceURL>http://localhost:2458/ImportData/ReceiveByDeilyPrice</ReceiveByDeilyPriceURL>
       <ReceiveByStockInfoURL>http://localhost:2458/ImportData/ReceiveByStockInfo</ReceiveByStockInfoURL>
+      <ReceiveByHighQualityList>http://localhost:2458/ImportData/ReceiveByHighQualityList</ReceiveByHighQualityList>
       <TWSEStockPriceURL>http://www.twse.com.tw/exchangeReport/MI_INDEX?response=csv&amp;date=@yyyyMMdd&amp;type=ALLBUT0999</TWSEStockPriceURL>
       <TPEXStockPriceURL>http://www.tpex.org.tw/web/stock/aftertrading/otc_quotes_no1430/stk_wn1430_result.php?l=zh-tw&amp;d=@yyyMMdd&amp;se=EW&amp;_=1531643107473</TPEXStockPriceURL>
       <GTSMStockPriceURL>http://www.tpex.org.tw//storage/emgstk/ch/new.csv?t=@t</GTSMStockPriceURL>
+      <DeilyPriceGTSMAlwaysGetYN>Y</DeilyPriceGTSMAlwaysGetYN>
       <SpecifiedDate></SpecifiedDate>
-    </AppSettings>
+      <LineChannelAccessToken>SALEdmTrZ001uP7nelpndyaRH5NPeTlEHd0QioPjNrNfOOzxfYj1QgDWZhPdePPYbrju9fe08TplcdB00qfArHWqfxs0Ob/B5jYwCmIIowTfjik14pb/EbjrdNqAdi2JIBLspjzBIYCuAdsUUsKPGwdB04t89/1O/w1cDnyilFU=</LineChannelAccessToken>
+      <LineAdminUserId>U06bdebb439e5566c04d9a40bf48ecdd8</LineAdminUserId>
+      <LineNotiflyUserIds>U06bdebb439e5566c04d9a40bf48ecdd8,U3ba8b8ce8d3c64bc338bcaddfde466f4,Uc4e3e555d10de47b5a45c64b615a1e30</LineNotiflyUserIds>
+  
+  </AppSettings>
 
     <Package>
       <Tools.Config>
