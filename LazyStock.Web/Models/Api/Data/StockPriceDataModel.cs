@@ -14,7 +14,7 @@ namespace LazyStock.Web.Models
         /// <summary>
         /// 股價
         /// </summary>
-        public float StockPrice { get; set; }
+        public double StockPrice { get; set; }
         /// <summary>
         /// 本益比
         /// </summary>

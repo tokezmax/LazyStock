@@ -20,7 +20,7 @@ namespace LazyStock.Web.Models
 
         public string Permission { get; set; }
         public string HashCode { get; set; }
-        
+        public string LastloginDate { get; set; }
 
         /*
         public string displayName { get; set; }

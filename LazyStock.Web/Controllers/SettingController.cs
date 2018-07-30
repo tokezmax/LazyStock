@@ -89,7 +89,7 @@ namespace LazyStock.Web.Controllers
 
             try
             {
-                Common.Tools.AuthHelper.IsPowerAdmin(Request);
+                //Common.Tools.AuthHelper.IsPowerAdmin(Request);
                 Common.Tools.Setting.ReLoad();
                 result.Code = ResponseCodeEnum.Success;
             }
@@ -100,5 +100,7 @@ namespace LazyStock.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
+
     }
 }

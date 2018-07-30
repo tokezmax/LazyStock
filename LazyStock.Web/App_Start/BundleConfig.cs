@@ -33,18 +33,19 @@ namespace LazyStock.Web
                 "~/css/owl.theme.default.css",
                 "~/css/magnific-popup.css",
                 "~/css/font-awesome.min.css",
+                "~/Content/themes/base/jquery-ui.min.css",
                 "~/css/style.css",
                 "~/css/toast.css"
             ));
-
+            
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/js/jquery.min.js",
                 "~/js/bootstrap.min.js",
                 "~/js/owl.carousel.min.js",
                 "~/js/jquery.magnific-popup.js",
-                "~/Scripts/jquery.cookie.js"
-                , "~/js/Common.js"
-                , "~/js/main.js"
+                "~/js/CookieHelper.js"
+            //, "~/js/Common.js"
+            //, "~/js/main.js"
             ));
         }
     }

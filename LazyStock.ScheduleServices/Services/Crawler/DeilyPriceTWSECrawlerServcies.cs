@@ -105,18 +105,17 @@ namespace LazyStock.ScheduleServices.Services
                     continue;
                 }
 
-                float CsvPrice = 0;
-                try
-                {
-                    CsvPrice = csv.GetField<float>(8);
-                }
-                catch { }
+                double CsvPrice = 0;
+                try{
+                    CsvPrice = csv.GetField<double>(8);
+                }catch { }
 
                 StockPricesList.Add(new StockPriceDataModel
                 {
                     StockNum = CsvStockNum,
-                    StockPrice = CsvPrice
+                    StockPrice = Math.Round(CsvPrice, 2)
                 });
+
             }
             UploadData();
             UpdateLocalDB();
@@ -159,18 +158,16 @@ namespace LazyStock.ScheduleServices.Services
             {
                 foreach (StockPriceDataModel spdm in StockPricesList)
                 {
-
                     ArrayList list = new ArrayList();
                     list.Add(new SqlParameter("@StockPrice", spdm.StockPrice));
                     list.Add(new SqlParameter("@StockNum", spdm.StockNum));
                     Common.DataAccess.Dao.execute(SQLUpdateLocalDB, list, Setting.ConnectionString("Stock"));
-
                 }
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split('|'));
             }
-            catch
+            catch (Exception e)
             {
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL No done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, ("SQL No done\r\n" + e.Message).Split('|'));
             }
         }
     }

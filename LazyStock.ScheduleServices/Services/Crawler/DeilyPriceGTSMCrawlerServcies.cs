@@ -68,8 +68,9 @@ namespace LazyStock.ScheduleServices.Services
             if (System.IO.File.Exists(CheckDoneFullPath))
                 throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]Before Done, do nothing!");
 
-            if (GetDate.Hour <= 18 && GetDate.Hour >=8)
-                throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]8~18交易時間禁止抓取!");
+            if (Setting.AppSettings("DeilyPriceGTSMAlwaysGetYN") != "Y")
+                if ((GetDate.Hour <= 18 && GetDate.Hour >=8))
+                    throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]8~18交易時間禁止抓取!");
         }
 
         public override void Download()
@@ -108,17 +109,17 @@ namespace LazyStock.ScheduleServices.Services
                     continue;
                 }
 
-                float CsvPrice = 0;
+                double CsvPrice = 0;
                 try
                 {
-                    CsvPrice = csv.GetField<float>(10);
+                    CsvPrice = csv.GetField<double>(10);
                 }
                 catch { }
 
                 StockPricesList.Add(new StockPriceDataModel
                 {
                     StockNum = CsvStockNum,
-                    StockPrice = CsvPrice
+                    StockPrice = Math.Round(CsvPrice,2)
                 });
             }
             UploadData();
@@ -163,18 +164,16 @@ namespace LazyStock.ScheduleServices.Services
             {
                 foreach (StockPriceDataModel spdm in StockPricesList)
                 {
-
                     ArrayList list = new ArrayList();
                     list.Add(new SqlParameter("@StockPrice", spdm.StockPrice));
                     list.Add(new SqlParameter("@StockNum", spdm.StockNum));
                     Common.DataAccess.Dao.execute(SQLUpdateLocalDB, list, Setting.ConnectionString("Stock"));
-
                 }
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split('|'));
             }
-            catch
+            catch (Exception e)
             {
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL No done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, ("SQL No done\r\n" + e.Message).Split('|'));
             }
         }
     }

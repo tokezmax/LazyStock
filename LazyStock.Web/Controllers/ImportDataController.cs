@@ -30,13 +30,13 @@ namespace LazyStock.Web.Controllers
         /// LazyStockDBPath
         public static String StockInfoJsonDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\JsonData\";
         public static String LazyStockDBPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\LazyStockDB.db";
+        public static String LazySlotDBPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\LazySlotDB.db";
         #endregion
 
 
         /// <summary>
         /// 接收(Json)更新股價
         /// </summary>
-        /// <param name="StockNum"></param>
         /// <returns></returns>
         public ActionResult ReceiveByDeilyPrice(ReceiveByDeilyPriceReqModel ReqParam)
         {
@@ -57,14 +57,14 @@ namespace LazyStock.Web.Controllers
                         StockPriceDataModel items = ReqParam.StockPrices[i];
                         try
                         {
-                            int IDKey = Int32.Parse(items.StockNum);
-                            var DbStockPrice = StockInfos.FindById(IDKey);
+                            var DbStockPrice = StockInfos.FindById(items.StockNum);
                             if (DbStockPrice == null)
                                 continue;
 
 
-                            DbStockPrice.Price = items.StockPrice;
-                            StockInfos.Update(IDKey, DbStockPrice);
+                            DbStockPrice.Price = Math.Round( items.StockPrice,2);
+                            DbStockPrice.PriceModifyDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                            StockInfos.Update(items.StockNum, DbStockPrice);
                             SuccCount++;
                         }
                         catch
@@ -89,7 +89,6 @@ namespace LazyStock.Web.Controllers
         /// <summary>
         /// [接收股票訊息][修改LiteDB]
         /// </summary>
-        /// <param name="StockNum"></param>
         /// <returns></returns>
         public ActionResult ReceiveByStockInfo(ReceiveByStockInfoReqModel ReqParam)
         {
@@ -116,6 +115,54 @@ namespace LazyStock.Web.Controllers
                             //  continue;
                             StockInfos.Delete(items.StockNum);
                             StockInfos.Insert(items.StockNum, items);
+                            SuccCount++;
+                        }
+                        catch
+                        {
+                            FailCount++;
+                        }
+                    }
+                }
+
+                result.Message = "成功:" + SuccCount.ToString() + ",失敗:" + FailCount.ToString();
+                result.Code = ResponseCodeEnum.Success;
+            }
+            catch (Exception e)
+            {
+                result.Code = ResponseCodeEnum.Failed;
+                result.Message = e.Message;
+            }
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// [接收高品質高股訊息][修改LiteDB]
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ReceiveByHighQualityList(ReceiveByHighQualityListReqModel ReqParam)
+        {
+            BaseResModel<HighQualityResModel> result = new BaseResModel<HighQualityResModel>();
+            try
+            {
+                Common.Tools.AuthHelper.IsPowerAdmin(Request);
+                int SuccCount = 0;
+                int FailCount = 0;
+                // Open database (or create if not exits)
+                using (var db = new LiteDatabase(LazySlotDBPath))
+                {
+                    // Get customer collection
+                    var HighQualityStock = db.GetCollection<HighQualityResModel>("HighQualityStock");
+
+                    var lists = HighQualityStock.FindAll();
+                    foreach (var row in lists)
+                        HighQualityStock.Delete(row.StockNum);
+
+                    for (int i = 0; i < ReqParam.HighQualityStock.Count; i++)
+                    {
+                        HighQualityResModel items = ReqParam.HighQualityStock[i];
+                        try
+                        {
+                            HighQualityStock.Insert(items.StockNum, items);
                             SuccCount++;
                         }
                         catch

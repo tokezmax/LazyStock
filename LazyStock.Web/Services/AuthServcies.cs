@@ -4,50 +4,71 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Linq;
 using System.Web;
 using Common.Extensions;
+using System.Runtime.Caching;
+
 
 namespace LazyStock.Web.Services
 {
     public class AuthServcies
     {
+        public static ConcurrentDictionary<String,DDOSModel> ddos = new ConcurrentDictionary<String, DDOSModel>();
 
-        public static HashSet<DDOSModel> ddos = new HashSet<DDOSModel>();
+
+        public static MemberInfoModel GetHeaderToMemberInfo(HttpRequestBase req) {
+            return JsonConvert.DeserializeObject<MemberInfoModel>(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(req.Headers["_UserInfo"].ToGetValue<string>())));
+        }
+
         public static bool IsOverQuery(HttpRequestBase req)
         {
             try
             {
+                MemberInfoModel MemberInfo = null;
+                String UseKey = req.UserHostAddress;
+                DDOSModel OldQuery = null;
                 DDOSModel NewQuery = new DDOSModel();
-                MemberInfoModel m = JsonConvert.DeserializeObject<MemberInfoModel>(req.Cookies["_UserInfo"].Value);
-                if(m !=null)
-                    NewQuery.userid = m.LineId;
-
                 NewQuery.ip = req.UserHostAddress;
                 NewQuery.QueryCount = 0;
 
-                DDOSModel OldQuery=null;
-                if (m != null)
-                    OldQuery = ddos.Where(x => x.userid == m.LineId).FirstOrDefault();
+                try
+                {
+                    //req.Cookies["_UserInfo"].Value
+                    MemberInfo = GetHeaderToMemberInfo(req);
+                    NewQuery.userid = MemberInfo.LineId;
+                }catch {
+                    MemberInfo = null;
+                }
 
+                //cookie是否存在 (是否有login)
+                if (MemberInfo != null) {
+                    if (ddos.ContainsKey(MemberInfo.LineId))
+                        OldQuery = ddos[MemberInfo.LineId];
+                }
+                else {
+                    if (ddos.ContainsKey(req.UserHostAddress))
+                        OldQuery = ddos[req.UserHostAddress];
+                }
 
-                if (OldQuery == null)
-                    OldQuery = ddos.Where(x => x.ip == req.UserHostAddress).FirstOrDefault();
-
-                if (OldQuery == null) { 
-                    ddos.Add(NewQuery);
+                //沒有舊資料，代表0次查詢，以新的為主
+                UseKey = (String.IsNullOrEmpty(NewQuery.userid) ? NewQuery.ip : NewQuery.userid);
+                if (OldQuery == null) {
+                    
+                    ddos.TryAdd(UseKey, NewQuery);
                     return false;
                 }
 
+                //有新有舊，count+1
                 if (NewQuery.Min == OldQuery.Min) {
-                    if (OldQuery.QueryCount > 20) {
+                    NewQuery.QueryCount = OldQuery.QueryCount + 1;
+                    if (OldQuery.QueryCount > int.Parse(Common.Tools.Setting.AppSettings("QueryStockInfoCount"))) {
                         return true;
                     }
-                    NewQuery.QueryCount = OldQuery.QueryCount + 1;
                 }
 
-                ddos.Remove(OldQuery);
-                ddos.Add(NewQuery);
+                ddos.TryUpdate(UseKey, NewQuery, OldQuery);
                 return false;
             }
             catch
@@ -57,14 +78,16 @@ namespace LazyStock.Web.Services
         }
 
         public static bool Islogin(HttpRequestBase req) {
+            bool result = false;
+            try {
+                return IsSuccAuth(JsonConvert.DeserializeObject<MemberInfoModel>(System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(req.Headers["_UserInfo"]))));
+            }catch {}
 
             try {
-                return IsSuccAuth(JsonConvert.DeserializeObject<MemberInfoModel>(req.Cookies["_UserInfo"].Value));
-            }
-            catch{// (Exception ex) {
-                return false;
-            }
-            
+                return IsSuccAuth(JsonConvert.DeserializeObject<MemberInfoModel>(HttpUtility.UrlDecode(req.Cookies["_UserInfo"].Value)));
+            }catch {}
+
+            return result;
         }
 
         public static String EncryptMemberInfo(MemberInfoModel req)
@@ -85,11 +108,12 @@ namespace LazyStock.Web.Services
         {
             bool res = false;
             try{
-                string MakeTime = CryptoHelper.Decrypt3DES(req.HashCode, req.LineId);
+                string MakeTime = CryptoHelper.Decrypt3DES(req.HashCode.Replace(" ", "").Replace("/n", "").Replace("/r", ""), req.LineId);
                 DateTime LoginDate = DateTime.Parse(MakeTime);
-                if (DateTime.Now < LoginDate)
+                if (DateTime.Now > LoginDate)
                     res = false;
-                res = true;
+                else
+                    res = true;
             }
             catch{// (Exception ex) {
                 

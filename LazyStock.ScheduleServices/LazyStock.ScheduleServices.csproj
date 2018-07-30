@@ -38,13 +38,21 @@
     <Reference Include="CsvHelper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
       <HintPath>..\packages\CsvHelper.7.1.1\lib\net45\CsvHelper.dll</HintPath>
     </Reference>
+    <Reference Include="Dapper, Version=1.50.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.50.5\lib\net451\Dapper.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="LineBot, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LineBotSDK.0.7.5\lib\net45\LineBot.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -56,12 +64,21 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -71,45 +88,59 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
-    <Reference Include="WebDriver, Version=3.13.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Selenium.WebDriver.3.13.1\lib\net45\WebDriver.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DbContext\CalStockEachQAvgEPS.cs">
-      <DependentUpon>StockDbContext.tt</DependentUpon>
+    <Compile Include="CrawlerForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DbContext\CalStockEPS_Divi.cs">
-      <DependentUpon>StockDbContext.tt</DependentUpon>
+    <Compile Include="CrawlerForm.Designer.cs">
+      <DependentUpon>CrawlerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="DbContext\CalStockInfo.cs">
-      <DependentUpon>StockDbContext.tt</DependentUpon>
+    <Compile Include="EFModel\CalStockEPS_Divi.cs">
+      <DependentUpon>StockDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbContext\StockDbContext.Context.cs">
+    <Compile Include="EFModel\CalStockInfo.cs">
+      <DependentUpon>StockDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EFModel\QueryHighQualityListForSlot_Result.cs">
+      <DependentUpon>StockDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EFModel\QueryHighQualityList_Result.cs">
+      <DependentUpon>StockDbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EFModel\StockDbModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockDbContext.Context.tt</DependentUpon>
+      <DependentUpon>StockDbModel.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbContext\StockDbContext.cs">
+    <Compile Include="EFModel\StockDbModel.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockDbContext.tt</DependentUpon>
+      <DependentUpon>StockDbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DbContext\StockDbContext.Designer.cs">
+    <Compile Include="EFModel\StockDbModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>StockDbContext.edmx</DependentUpon>
+      <DependentUpon>StockDbModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EFModel\StockPriceDay.cs">
+      <DependentUpon>StockDbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Interface\ICrawler.cs" />
+    <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Model\Data\EPS_DiviDataModel.cs" />
+    <Compile Include="Model\Data\HighQualityListModel.cs" />
     <Compile Include="Model\Data\StockInfoDataModel.cs" />
     <Compile Include="Model\Data\StockPriceDataModel.cs" />
     <Compile Include="Model\Data\TPEXStockPriceDataModel.cs" />
     <Compile Include="Model\Enum\ResponseCodeEnum.cs" />
+    <Compile Include="Model\Line\TextMessageModel.cs" />
     <Compile Include="Model\Req\Base\BaseReqModel.cs" />
     <Compile Include="Model\Req\ReceiveByDeilyPriceReqModel.cs" />
+    <Compile Include="Model\Req\ReceiveByHighQualityListReqModel.cs" />
     <Compile Include="Model\Req\ReceiveByStockInfoReqModel.cs" />
     <Compile Include="Model\Res\Base\BaseResModel.cs" />
+    <Compile Include="Model\Res\HighQualityResModel.cs" />
     <Compile Include="Model\Res\StockInfoReqModel.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -117,6 +148,7 @@
     <Compile Include="ProjectInstaller.Designer.cs">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
+    <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -129,7 +161,10 @@
     <Compile Include="Services\Crawler\DeilyPriceGTSMCrawlerServcies.cs" />
     <Compile Include="Services\Crawler\DeilyPriceTPEXCrawlerServcies.cs" />
     <Compile Include="Services\Crawler\DeilyPriceTWSECrawlerServcies.cs" />
+    <Compile Include="Services\DataArchive\CalStockInfoArchiveServices.cs" />
+    <Compile Include="Services\DataProvide\StableStockServices.cs" />
     <Compile Include="Services\DataProvide\StockInfoServices.cs" />
+    <Compile Include="Services\Notifly\DeilyStockNotiflyServices.cs" />
     <Compile Include="TestForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,28 +173,32 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DbContext\StockDbContext.Context.tt">
+    <Content Include="EFModel\StockDbModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockDbContext.edmx</DependentUpon>
-      <LastGenOutput>StockDbContext.Context.cs</LastGenOutput>
+      <DependentUpon>StockDbModel.edmx</DependentUpon>
+      <LastGenOutput>StockDbModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="DbContext\StockDbContext.tt">
+    <Content Include="EFModel\StockDbModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>StockDbContext.edmx</DependentUpon>
-      <LastGenOutput>StockDbContext.cs</LastGenOutput>
+      <DependentUpon>StockDbModel.edmx</DependentUpon>
+      <LastGenOutput>StockDbModel.cs</LastGenOutput>
     </Content>
     <Content Include="Todo.txt" />
-    <Content Include="Setting.xml" />
-    <None Include="App.config" />
+    <Content Include="Setting.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="DbContext\StockDbContext.edmx">
+    <EntityDeploy Include="EFModel\StockDbModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>StockDbContext.Designer.cs</LastGenOutput>
+      <LastGenOutput>StockDbModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="DbContext\StockDbContext.edmx.diagram">
-      <DependentUpon>StockDbContext.edmx</DependentUpon>
+    <None Include="EFModel\StockDbModel.edmx.diagram">
+      <DependentUpon>StockDbModel.edmx</DependentUpon>
     </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
@@ -167,6 +206,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CrawlerForm.resx">
+      <DependentUpon>CrawlerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>

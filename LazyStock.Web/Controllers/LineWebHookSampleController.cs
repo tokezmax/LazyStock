@@ -9,8 +9,8 @@ namespace WebApplication1.Controllers
 {
     public class LineBotWebHookController : isRock.LineBot.LineWebHookControllerBase
     {
-        const string channelAccessToken = "R8HX6KfjnOQcuwhoLy58urMTvCa/JOJwKb/5Vutli6R4N8P6ODJdYrqHTlxacTdIrlRXnYfRaRrcW/dgLkJHNKuVsgFL9KoGE/6GsHaurpbuIPJg/afGoKrO0rL3p4edHMz7ujGfTy4X67yD95n8zQdB04t89/1O/w1cDnyilFU=";
-        const string AdminUserId = "U3e9d23440ba5e125c44ebf8962cee353";
+        const string channelAccessToken = "SALEdmTrZ001uP7nelpndyaRH5NPeTlEHd0QioPjNrNfOOzxfYj1QgDWZhPdePPYbrju9fe08TplcdB00qfArHWqfxs0Ob/B5jYwCmIIowTfjik14pb/EbjrdNqAdi2JIBLspjzBIYCuAdsUUsKPGwdB04t89/1O/w1cDnyilFU=";
+        const string AdminUserId = "U06bdebb439e5566c04d9a40bf48ecdd8";
 
         [Route("api/LineWebHookSample")]
         [HttpPost]
@@ -35,37 +35,10 @@ namespace WebApplication1.Controllers
                 //回覆訊息
                 if (LineEvent.type == "message")
                 {
-                    /*
                     if (LineEvent.message.type == "text") //收到文字
                         this.ReplyMessage(LineEvent.replyToken, "你說了("+ UserId + "):" + LineEvent.message.text);
                     if (LineEvent.message.type == "sticker") //收到貼圖
                         this.ReplyMessage(LineEvent.replyToken, 1, 2);
-                    */
-                    if (LineEvent.message.type == "text") {
-
-                        if (LineEvent.message.text.IndexOf("點餐") > -1)
-                        {
-                            this.ReplyMessage(LineEvent.replyToken, "早安~"+_UserName+"("+ _UserId + ")[" + UserId + "]~是否和上次一樣？\n●拿鐵(L)-冰-無糖\n●歐姆蛋貝果\n\n2018/05/27 9:30 取餐呢？");
-                        }
-                        else if (LineEvent.message.text.IndexOf("是") > -1)
-                        {
-                            this.ReplyMessage(LineEvent.replyToken, "感謝您的訂購~ :)");
-                        }
-                        else if (LineEvent.message.text.ToUpper().IndexOf("YES") > -1)
-                        {
-                            this.ReplyMessage(LineEvent.replyToken, "取消完成~ T_T");
-                        }
-                        if (LineEvent.message.text.IndexOf("取消訂單") > -1)
-                        {
-                            this.ReplyMessage(LineEvent.replyToken, "陳sir~確定要取消下列訂單~\n●拿鐵(L)-冰-無糖\n●歐姆蛋貝果\n");
-                        }
-                        else if ((LineEvent.message.text.IndexOf("點餐") > -1) || LineEvent.message.text.ToUpper().IndexOf("MENU") > -1) {
-
-                        }
-                        else {
-                            this.ReplyMessage(LineEvent.replyToken, "歡迎~請問需要什麼服務呢？\n");
-                        }
-                    }
                 }
                 //response OK
                 return Ok();

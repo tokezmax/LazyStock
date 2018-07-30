@@ -91,7 +91,7 @@
 	});
 
     $('#btnQuery').click(function () {
-        var c = $("#StockNum").val();
+        var c = $("#StockNum").val().split(' ')[0];
         if (c.length !== 4) { 
             alert('請輸入正確的股票編號');
             return;
@@ -102,6 +102,11 @@
 
         doQuery(c);
     });
+
+    $('#btnSlot').click(function () {
+        doQueryGetNum();
+    });
+    
     $(".StockStatus").hide();
 
 
@@ -118,25 +123,58 @@
             type: 'iframe',
             iframe: {
                 dailymotion: {
-                    src: 'LineLoginAuth.aspx'
+                    src: 'LazySlot.aspx'
                 }
             }
         }]
     });
+
     
+
+
     $(document).on('click', '.popup-modal-dismiss', function (e) {
         e.preventDefault();
         $.magnificPopup.close();
-
-
-        
-
     });
     
     $(document).ready(function () {
         AuthControll();
+        (IsMobile() ? $("#btnSlot").hide() : $("#btnSlot").show());
+        $("#StockNum").autocomplete({source: $.fn.Setting.StockNumMapping});
     });
 })(jQuery);
+
+
+//var LazySlotWin;
+window.closeLazySlot = function (StockNum) {
+  //  if (LazySlotWin) {
+        //LazySlotWin.close();
+    //}
+    
+    if (StockNum) {
+        $('a#alinkGoContact').click();
+        $("#StockNum").val(StockNum);
+        $('#btnQuery').click();
+    }
+    
+    $.magnificPopup.close();
+}
+
+function IsMobile() {
+    return (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+}
+
+function openLazySlot(StockNum,StockName) {
+    $.magnificPopup.open({
+        items: {
+            src: 'LazySlot.aspx?Num=' + StockNum + '&StockName=' + encodeURIComponent(StockName)
+        },
+        type: 'iframe',
+        closeOnBgClick: false,
+        showCloseBtn: false
+    });
+}
+
 
 var CommonHelper = new Common();
 var StockInfoData = null;
@@ -144,12 +182,18 @@ var StockInfoData = null;
 function setStgPrice() {
     $("#StockStgBlock").hide();
     $("#PleaseLoginBlock").show();
-    if (_u) 
-        if (_u.Permission == "1") { 
+    if (_u) { 
+        if (_u.Permission == "1") {
             $("#StockStgBlock").show();
             $("#PleaseLoginBlock").hide();
+        } else {
+            if (!StockInfoData.CurrFromEPS) { 
+                logout();
+                return;
+            }
         }
-
+    }
+    
     if (!StockInfoData)
         return;
     var WishRatio = $("#WishDivi").val();
@@ -221,19 +265,23 @@ function setRiskStatus() {
 }
 
 var doQuery = function (x) {
-    var targetUrl = 'Data/GetStockInfo?StockNum=' + x + '&t=' + CommonHelper.GenRandom(5);
+    var targetUrl = 'Data/GetStockInfo?StockNum=' + x+ '&t=' + CommonHelper.GenRandom(5);
     $.ajax({
         type: "post",
         url: targetUrl,
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
-        beforeSend: function (xhr, opts) {
-            //xhr.abort();
+        beforeSend: function (req, opts) {
+            if (_u && _u.HashCode) 
+                req.setRequestHeader("_UserInfo", (new Base64()).encode(JSON.stringify(_u)));
+            
+            //req.abort();
             $("#preloader").show();
             $(".StockStatus").hide();
         },
         success: function (data) {
             StockInfoData = null;
+            data = $.fn.ApiResponse.JsonFormatCheck(data);
             if (!data) {
                 setErrStatus("通訊異常!");
                 return;
@@ -243,20 +291,17 @@ var doQuery = function (x) {
                 return;
             }
             StockInfoData = data.Result;
-            
+
+
+
             $("#RevenueGrowthRatio").attr("title", "["+StockInfoData.RevenueYYYYMM + "]累計:" + StockInfoData.RevenueGrowthRatio+"%");
             $("#PriceModifyDate").attr("title","最後更新時間:"+StockInfoData.PriceModifyDate);
             $("#StockInfoNum").html(StockInfoData.StockNum);
             $("#StockInfoName").html(StockInfoData.StockName);
             $("#StockInfoIndustry").html(StockInfoData.Industry);
-            $("#StockInfoPrice").html(StockInfoData.Price);
-            //取得去年Divi
-            var PrevYearDivi = parseFloat(StockInfoData.EPS_Divi[1].TotalDivi);
-            var CurrPrice = parseFloat(StockInfoData.Price)
-            var CurrDivi = new Number(PrevYearDivi / CurrPrice);
-            CurrDivi = Math.floor(CurrDivi * 10000)/100;
-            $("#StockInfoCurrDivi").html(CurrDivi).append('%');
 
+            StockInfoData.Price = CommonHelper.RoundX(parseFloat(StockInfoData.Price), 2);
+            $("#StockInfoPrice").html(StockInfoData.Price);
             
             setStockStatus("IsGrowingUpRevenue", StockInfoData.IsGrowingUpRevenue);
 
@@ -289,13 +334,21 @@ var doQuery = function (x) {
             $('.contact ').eq(0).append('<P>大戶持股(%): ' + StockInfoData.InvestorRatio + "</P>");
             $('.contact ').eq(0).append('<P>負債比: ' + StockInfoData.DebtRatio + "%</P>");
             $('.contact ').eq(0).append('<P>淨值（億）: ' + StockInfoData.Value + "</P>");
-            
+
+            var prevYear = (new Date()).getFullYear() - 1;
+            var PrevYearDivi = 0;
             $.each(StockInfoData.EPS_Divi, function (key, value) {
+                if (value.Year == prevYear)
+                    PrevYearDivi = CommonHelper.RoundX(value.TotalEPS, 2);
+
                 $('.contact ').eq(2).append(value.Year + value.LastQ + '／' + CommonHelper.RoundX(value.TotalEPS, 2) + '／' + (value.EachDiviFromEPS == null ? 0 : +value.EachDiviFromEPS) +'<BR>');
                 if (value.LastQ === 'Q4')
                     $('.contact ').eq(1).append(value.Year + value.LastQ + '／' + value.TotalDivi + "<BR>");
             });
-            
+
+            var CurrDivi = new Number(PrevYearDivi / StockInfoData.Price);
+            CurrDivi = Math.floor(CurrDivi * 10000) / 100;
+            $("#StockInfoCurrDivi").html(CurrDivi).append('%');
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert('通訊異常');
@@ -305,6 +358,46 @@ var doQuery = function (x) {
         }
     });
 }
+
+
+var doQueryGetNum = function (x) {
+    var targetUrl = 'LazySlot/GetNum?t=' + CommonHelper.GenRandom(5);
+    $.ajax({
+        type: "post",
+        url: targetUrl,
+        dataType: 'json',
+        contentType: "application/json;charset=utf-8",
+        beforeSend: function (req, opts) {
+            if (_u && _u.HashCode)
+                req.setRequestHeader("_UserInfo", (new Base64()).encode(JSON.stringify(_u)));
+            else { 
+                setErrStatus("請先登錄Line~");
+                req.abort();
+                return;
+            }
+            $("#preloader").show();
+        },
+        success: function (data) {
+            data = $.fn.ApiResponse.JsonFormatCheck(data);
+            if (!data) {
+                setErrStatus("通訊異常!");
+                return;
+            }
+            if (data.Code !== 0) {
+                setErrStatus("[" + data.Code + "]" + data.Message);
+                return;
+            }
+            openLazySlot(data.Result.StockNum, data.Result.StockName)
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            setErrStatus("通訊異常");
+        },
+        complete: function () {
+            $("#preloader").delay(100).fadeOut();
+        }
+    });
+}
+
 
 function setErrStatus(msg) {
     $(".StockStatus").hide();
@@ -330,25 +423,43 @@ function setStockStatus(id, IsOk) {
 
 }
 
-var _u;
-function AuthControll() {
-    //$("#StockStgBlock").hide();
-    //$("#PleaseLoginBlock").show();
-    _u = $.cookie('_UserInfo');
 
+var _u;
+var _ckHelper = new CookieHelper();
+
+function AuthControll() {
+    var urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('v')) {
+        if (typeof (Storage) !== "undefined") {
+            var userObj = (new Base64()).decode((new URLSearchParams(window.location.search)).get('v').replace(/\ /g, '+').replace(/\n/g, ''));
+            _ckHelper.setCookie("_UserInfo", userObj)
+            //window.localStorage.setItem("_UserInfo", userObj);
+            window.location = "/";
+            return;
+        }
+    }
+    
+    //if (typeof (Storage) !== "undefined")
+    _u = _ckHelper.getCookie("_UserInfo")
+    
     if (!_u) return;
     if (_u==="null") return;
+    _u = JSON.parse(_u);
+    $("#LineAuth >img").attr("src", _u.PicUrl + "?ad=" + CommonHelper.GenRandom(4)).css({ "height": "25px"});
+    $("#LineAuth").append("&nbsp; Hi~" + decodeURIComponent(_u.UserName));
+    $("#LineAuth").attr("href", "javascript:logout();")
+}
 
-    if (_u) {
-        _u = JSON.parse($.cookie('_UserInfo'));
 
-        $("#LineAuth >img").attr("src", _u.PicUrl + "?ad=" + CommonHelper.GenRandom(4)).css({ "height": "25px"});
-        $("#LineAuth").append("&nbsp; Hi~" + _u.UserName);
-        $("#LineAuth").attr("href", "javascript:logout();")
-        //$("#PleaseLoginBlock").hide();
-    } 
-}        
 function logout() {
-    $.cookie('_UserInfo', null);
+    _ckHelper.delCookie("_UserInfo");
+    //if (_ckHelper.getCookie("_UserInfo"))
+        //$.cookie('_UserInfo', null);
+    /*
+    if (typeof (Storage) !== "undefined") {
+        if (localStorage._UserInfo)
+            localStorage.removeItem('_UserInfo');
+    }
+    */
     location.reload()
 }

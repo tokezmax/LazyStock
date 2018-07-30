@@ -27,6 +27,7 @@ namespace LazyStock.ScheduleServices
 
             //ServiceBase.Run(new ServiceBase[] { new Service1() });
             Application.Run(new TestForm());
+            //Application.Run(new CrawlerForm());
         }
     }
 }

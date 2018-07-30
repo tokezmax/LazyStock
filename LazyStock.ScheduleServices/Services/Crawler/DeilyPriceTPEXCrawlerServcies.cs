@@ -105,7 +105,7 @@ namespace LazyStock.ScheduleServices.Services
             foreach (String[] Rows in TPEXStockData.aaData)
             {
                 String StockNum = "";
-                float Price = 0;
+                double Price = 0;
 
                 try
                 {
@@ -121,7 +121,7 @@ namespace LazyStock.ScheduleServices.Services
 
                 try
                 {
-                    Price = float.Parse(Rows[2]);
+                    Price = Math.Round(double.Parse(Rows[2]), 2) ;
                 }
                 catch { }
 
@@ -180,11 +180,11 @@ namespace LazyStock.ScheduleServices.Services
                     Common.DataAccess.Dao.execute(SQLUpdateLocalDB, list, Setting.ConnectionString("Stock"));
 
                 }
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split('|'));
             }
-            catch
+            catch (Exception e)
             {
-                System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL No done".Split(' '));
+                System.IO.File.WriteAllLines(CheckDoneFullPath, ("SQL No done\r\n" + e.Message).Split('|'));
             }
         }
     }

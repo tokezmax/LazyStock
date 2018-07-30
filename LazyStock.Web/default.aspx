@@ -2,9 +2,11 @@
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-tw">
 
 <head>
+    <meta name="keywords" content="stock investment 價值型投資 投資 股票 殖利率 LazyStock">
+    <meta name="description" content="價值型投資的利器,讓您投資更輕鬆">
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,6 +16,8 @@
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CVarela+Round" rel="stylesheet">
+
+    
     <%--
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
@@ -33,6 +37,7 @@
     <link type="text/css" rel="stylesheet"  href="css/toast.css"/>
      --%>
 
+    
     <%:Styles.Render("~/bundles/css") %>
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -47,8 +52,14 @@
         enable_page_level_ads: true
       });
     </script>
-
-    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-122835400-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-122835400-1');
+    </script>
 </head>
 
 <body>
@@ -117,7 +128,7 @@
 							<h1 class="white-text">Lazy Stock</h1>
 							<p class="white-text">我們懶的操股，我們只想花最少的工，獲得最大的勝率<br />當你學會了慢，你獲得的不止是金錢，還有更多的時間</p>
 							<button class="white-btn" id="btnStartNow">立刻使用</button>
-                            <button class="main-btn" id="btnReg" style="display:none" >註冊</button>
+                            <button class="main-btn" id="btnReg" style="display:none"  >註冊</button>
 						</div>
 					</div>
 					<!-- /home content -->
@@ -783,6 +794,7 @@
                             <div class="form-group">
                                 <input  class="form-control" placeholder="股票代碼" id="StockNum" maxlength='4'>
                                 <button class="main-btn btn-xs" id="btnQuery" onclick=" return false; ">查詢</button>
+                                <button class="main-btn btn-xs" id="btnSlot" onclick=" return false; ">偷偷跟你說:p</button>
                             </div>
                         </form>
                    </div>
@@ -1103,6 +1115,7 @@
 					<!-- /footer logo -->
 
 					<!-- footer follow -->
+
 					<ul class="footer-follow">
                         <li>投資有賺有賠．策略工具並不保証100%獲利</li>
                         <!--
@@ -1149,7 +1162,7 @@
 	<!-- /Preloader -->
     
 
-    <div id="ToastMsg" >Some text some message..</div>
+    <div id="ToastMsg" ></div>
 
 
 	<!-- jQuery Plugins -->
@@ -1159,14 +1172,9 @@
 	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 	<script type="text/javascript" src="js/jquery.magnific-popup.js"></script>
+    --%>
+    <script type="text/javascript" src="Scripts/jquery-ui-1.12.1.js"></script>
     <script type="text/javascript" src="js/Common.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
     <script type="text/javascript" src="js/main.js?t=<%=DateTime.Now.ToString("yyyyMMddHHmmssfff") %>"></script>
-    --%>
-
-    
-    
-    
-    
 </body>
-
 </html>
