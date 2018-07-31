@@ -41,7 +41,6 @@ Table OF Contents
 	General
 \*------------------------------------*/
 
-
 /* -- typography -- */
 
 body {
@@ -134,7 +133,6 @@ ul, ol {
     padding-bottom: 60px;
 }
 
-
 /* --  background section  -- */
 
 .bg-grey {
@@ -146,7 +144,6 @@ ul, ol {
 .bg-dark {
     background-color: #1C1D21;
 }
-
 
 /* --  background image section  -- */
 
@@ -171,7 +168,6 @@ ul, ol {
     opacity: .8;
     background: #1C1D21;
 }
-
 
 /* --  section header  -- */
 
@@ -255,7 +251,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     opacity: 0.8;
 }
 
-
 /*------------------------------------*\
 	Logo
 \*------------------------------------*/
@@ -290,7 +285,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     }
 }
 
-
 /*------------------------------------*\
 	Navigation
 \*------------------------------------*/
@@ -321,7 +315,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
 #nav.nav-transparent {
     background: transparent;
 }
-
 
 /* -- default nav -- */
 
@@ -422,7 +415,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     }
 }
 
-
 /* -- mobile nav -- */
 
 @media only screen and (max-width: 767px) {
@@ -504,7 +496,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     }
 }
 
-
 /* -- nav btn collapse -- */
 
 .nav-collapse {
@@ -569,7 +560,6 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focu
     transform: translateY(-4px) rotate(135deg);
 }
 
-
 /*------------------------------------*\
 	Header
 \*------------------------------------*/
@@ -619,7 +609,6 @@ header {
     color: #868F9B;
 }
 
-
 /*------------------------------------*\
 	About
 \*------------------------------------*/
@@ -663,7 +652,6 @@ header {
 .about:hover h3 {
     color: #fff;
 }
-
 
 /*------------------------------------*\
 	Portfolio
@@ -779,7 +767,6 @@ header {
     opacity: 1;
 }
 
-
 /*------------------------------------*\
 	Services
 \*------------------------------------*/
@@ -861,7 +848,6 @@ header {
     font-size: 36px;
     margin-bottom: 10px;
 }
-
 
 /*------------------------------------*\
 	Pricing
@@ -992,7 +978,6 @@ header {
     text-transform: uppercase;
 }
 
-
 /*------------------------------------*\
 	Team
 \*------------------------------------*/
@@ -1096,7 +1081,6 @@ header {
     opacity: 1;
 }
 
-
 /*------------------------------------*\
 	Blog
 \*------------------------------------*/
@@ -1171,7 +1155,6 @@ header {
 .blog-tags a:hover i {
   color: #FFF;
 }
-
 
 /* -- blog author -- */
 
@@ -1296,7 +1279,6 @@ header {
     margin-left: 15px;
 }
 
-
 /*------------------------------------*\
 	Blog sidebar
 \*------------------------------------*/
@@ -1409,8 +1391,6 @@ header {
     margin-right: 5px;
 }
 
-
-
 /*------------------------------------*\
 	Contact
 \*------------------------------------*/
@@ -1434,7 +1414,6 @@ header {
 .contact-form .input {
     margin-bottom: 20px;
 }
-
 
 .contact-form .input:nth-child(1), .contact-form .input:nth-child(2) {
     width: calc(50% - 10px);
@@ -1490,11 +1469,9 @@ header {
     margin: 0;
 }
 
-
 /*------------------------------------*\
 	Responsive
 \*------------------------------------*/
-
 
 @media only screen and (max-width: 991px) {}
 
@@ -1547,8 +1524,6 @@ header {
       margin-left: 0px;
   }
 
-
-
   .blog-author .media .media-left {
       display: block;
       padding-right: 0;
@@ -1569,8 +1544,6 @@ header {
       margin:0px -15px;
   }
 }
-
-
 
 /*------------------------------------*\
 	Owl theme
@@ -1634,7 +1607,6 @@ header {
     background: #6195FF;
 }
 
-
 /*------------------------------------*\
 	Back to top
 \*------------------------------------*/
@@ -1669,7 +1641,6 @@ header {
 /*------------------------------------*\
 	Preloader
 \*------------------------------------*/
-
 
 #preloader {
     position: fixed;
@@ -1819,7 +1790,6 @@ header {
         .panel-yellow > a:hover {
             color: #df8a13;
         }
-
 
 .white-popup-block {
     background: #FFF;

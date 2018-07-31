@@ -1,19 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web;
-using System.Web.Mvc;
-using Common;
-using Common.Extensions;
-using Common.Tools;
-using Newtonsoft.Json;
-using LazyStock.Web.Models;
-using System.Collections;
-using Newtonsoft.Json.Linq;
+﻿using LazyStock.Web.Models;
 using LiteDB;
+using System;
+using System.Web.Mvc;
 
 namespace LazyStock.Web.Controllers
 {
@@ -22,7 +10,7 @@ namespace LazyStock.Web.Controllers
         //實體檔案路徑
         public static String StockFileLocalDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\";
 
-        public ActionResult SetOption(String Key,String Val)
+        public ActionResult SetOption(String Key, String Val)
         {
             BaseResModel<Object> result = new BaseResModel<Object>();
             try
@@ -67,11 +55,13 @@ namespace LazyStock.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult Update(String Groups, String Category, String Keys, String Value)
         {
             BaseResModel<Object> result = new BaseResModel<Object>();
-            
-            try {
+
+            try
+            {
                 Common.Tools.AuthHelper.IsPowerAdmin(Request);
                 Common.Tools.Setting.SetConfig(Groups, Category, Keys, Value);
                 result.Code = ResponseCodeEnum.Success;
@@ -83,6 +73,7 @@ namespace LazyStock.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
+
         public ActionResult Load()
         {
             BaseResModel<Object> result = new BaseResModel<Object>();
@@ -100,7 +91,5 @@ namespace LazyStock.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-
     }
 }

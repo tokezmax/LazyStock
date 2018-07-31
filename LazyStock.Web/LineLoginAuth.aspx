@@ -5,14 +5,14 @@
     <title></title>
     <meta charset="utf-8" />
     <script>
-        function Auth(){ 
+        function Auth() {
             var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
             URL += 'response_type=code';
             URL += '&client_id=<%=Common.Tools.Setting.AppSettings("LineAuthId")%>';  //self client_id
             URL += '&redirect_uri=<%=Common.Tools.Setting.AppSettings("LineAuthCallBackUrl") %>';
             URL += '&scope=openid%20profile';
             URL += '&state=abcde';
-            
+
             window.location.href = URL;
         }
 

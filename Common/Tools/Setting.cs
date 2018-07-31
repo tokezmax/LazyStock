@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Xml;
+﻿using Common.DataAccess;
 using Common.Extensions;
-using Common.DataAccess;
-using System.Data;
+using System;
+using System.Collections;
 using System.Configuration;
+using System.Data;
+using System.Xml;
 
 namespace Common.Tools
 {
@@ -24,6 +24,7 @@ namespace Common.Tools
         }
 
         #region "載入方法"
+
         public static void ReLoad()
         {
             Settings.Clear();
@@ -42,12 +43,14 @@ namespace Common.Tools
                 CreateSettingFileInNotExist();
 
                 #region 取得config裡的DB連線
+
                 string _SmsPlatform_DB = (ConfigurationManager.ConnectionStrings["SmsPlatform"] == null || string.IsNullOrEmpty(ConfigurationManager.ConnectionStrings["SmsPlatform"].ConnectionString))
        ? "" : ConfigurationManager.ConnectionStrings["SmsPlatform"].ConnectionString.TrimEnd(';');
 
                 string _MuchNewDb_DB = (ConfigurationManager.ConnectionStrings["MuchNewDb"] == null || string.IsNullOrEmpty(ConfigurationManager.ConnectionStrings["MuchNewDb"].ConnectionString))
 ? "" : ConfigurationManager.ConnectionStrings["MuchNewDb"].ConnectionString.TrimEnd(';');
-                #endregion
+
+                #endregion 取得config裡的DB連線
 
                 Settings.Clear();
                 XmlDocument doc = new XmlDocument();
@@ -61,7 +64,6 @@ namespace Common.Tools
                     Hashtable vs = new Hashtable();
                     foreach (XmlNode nods in nod.ChildNodes)
                     {
-
                         Hashtable vss = new Hashtable();
                         foreach (XmlNode nodss in nods.ChildNodes)
                         {
@@ -73,6 +75,7 @@ namespace Common.Tools
                         vs.AddItem(nods.Name, vss);
 
                         #region 取得config裡的DB連線
+
                         /*
                         if (nod.Name == "SystemConfig")
                         {
@@ -83,13 +86,15 @@ namespace Common.Tools
                             vs.AddItem("ConnectionString", vss1);
                         }
                         */
-                        #endregion
+
+                        #endregion 取得config裡的DB連線
                     }
 
                     Settings.AddItem(nod.Name, vs);
                 }
 
                 #region 取得config裡的DB連線
+
                 /*
                 if (Settings.Count == 0)
                 {
@@ -103,7 +108,8 @@ namespace Common.Tools
                     Settings.AddItem("SystemConfig", vs1);
                 }
                 */
-                #endregion
+
+                #endregion 取得config裡的DB連線
             }
         }
 
@@ -134,15 +140,16 @@ namespace Common.Tools
                         Settings.AddDefualtItem(Groups, new Hashtable());
                         Settings.GetHashtable(Groups).AddDefualtItem(Category, new Hashtable());
                         Settings.GetHashtable(Groups).GetHashtable(Category).AddItem(Keys, Value);
-
                     }
                 }
                 dt.Dispose();
             }
         }
-        #endregion
+
+        #endregion "載入方法"
 
         #region "參數讀寫方法"
+
         /// <summary>
         /// 取得(Groups)參數集合
         /// </summary>
@@ -152,6 +159,7 @@ namespace Common.Tools
         {
             return Settings.GetHashtable(Groups);
         }
+
         /// <summary>
         /// 取得(Groups)->(Category)參數集合
         /// </summary>
@@ -162,6 +170,7 @@ namespace Common.Tools
         {
             return Settings.GetHashtable(Groups).GetHashtable(Category);
         }
+
         /// <summary>
         /// 取得參數
         /// </summary>
@@ -187,6 +196,7 @@ namespace Common.Tools
         {
             return Settings.GetHashtable("SystemConfig").GetHashtable("ConnectionString").GetString(Key);
         }
+
         /// <summary>
         /// 取得 AppSettings
         /// </summary>
@@ -210,6 +220,7 @@ namespace Common.Tools
             lock (GetGroups(Groups))
                 GetGroups(Groups).GetHashtable(Category).AddItem(Keys, Value);
         }
+
         /// <summary>
         /// 若查無檔案，即自動產生
         /// </summary>
@@ -219,6 +230,7 @@ namespace Common.Tools
                 return;
             System.IO.File.WriteAllText(XmlPath, XmlContext, System.Text.Encoding.UTF8);
         }
-        #endregion
+
+        #endregion "參數讀寫方法"
     }
 }

@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Common.Extensions;
+using Common.Tools;
+using LazyStock.ScheduleServices.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using Common.Extensions;
-using Common.Tools;
-using LazyStock.ScheduleServices.Model;
-using Newtonsoft.Json;
 
 namespace LazyStock.ScheduleServices.Services
 {
@@ -29,8 +28,7 @@ namespace LazyStock.ScheduleServices.Services
         protected String CheckDoneFileName;
         protected String CheckDoneFullPath;
         protected String DownloadData = "";
-        List<StockPriceDataModel> StockPricesList;
-
+        private List<StockPriceDataModel> StockPricesList;
 
         public DeilyPriceTPEXCrawlerServcies()
         {
@@ -64,16 +62,15 @@ namespace LazyStock.ScheduleServices.Services
                 System.IO.Directory.CreateDirectory(DownloadDirPath);
         }
 
-        public override void CheckIsDone() {
+        public override void CheckIsDone()
+        {
             if (System.IO.File.Exists(CheckDoneFullPath))
                 throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]Before Done, do nothing!");
         }
 
         public override void Download()
         {
-
             String url = DownloadUrl.Replace("@yyyMMdd", GetDate.ToSimpleTaiwanDate());
-
 
             using (WebClient wClient = new WebClient())
                 DownloadData = wClient.DownloadString(url);
@@ -86,7 +83,6 @@ namespace LazyStock.ScheduleServices.Services
 
         public override void ImportDate()
         {
-
             TPEXStockPriceDataModel TPEXStockData = null;
             try
             {
@@ -97,10 +93,10 @@ namespace LazyStock.ScheduleServices.Services
                 throw new Exception("錯誤的資料格式!");
             }
 
-            if (TPEXStockData.aaData.Length == 0) {
+            if (TPEXStockData.aaData.Length == 0)
+            {
                 throw new Exception("查無資料!");
             }
-
 
             foreach (String[] Rows in TPEXStockData.aaData)
             {
@@ -121,7 +117,7 @@ namespace LazyStock.ScheduleServices.Services
 
                 try
                 {
-                    Price = Math.Round(double.Parse(Rows[2]), 2) ;
+                    Price = Math.Round(double.Parse(Rows[2]), 2);
                 }
                 catch { }
 
@@ -138,7 +134,8 @@ namespace LazyStock.ScheduleServices.Services
 
         protected override void UploadData()
         {
-            try { 
+            try
+            {
                 LogHelper.doLog(this.ClassName, "==準備發送==\r\n" + StockPricesList.Count.ToString() + "筆");
 
                 for (int i = 0; i < StockPricesList.Count; i = i + 100)
@@ -159,8 +156,7 @@ namespace LazyStock.ScheduleServices.Services
                 }
                 System.IO.File.WriteAllText(this.CheckDoneFullPath, "done");
                 LogHelper.doLog(this.ClassName, "[Succ]Done");
-
-            }   
+            }
             catch (Exception ex)
             {
                 throw ex;
@@ -173,12 +169,10 @@ namespace LazyStock.ScheduleServices.Services
             {
                 foreach (StockPriceDataModel spdm in StockPricesList)
                 {
-
                     ArrayList list = new ArrayList();
                     list.Add(new SqlParameter("@StockPrice", spdm.StockPrice));
                     list.Add(new SqlParameter("@StockNum", spdm.StockNum));
                     Common.DataAccess.Dao.execute(SQLUpdateLocalDB, list, Setting.ConnectionString("Stock"));
-
                 }
                 System.IO.File.WriteAllLines(CheckDoneFullPath, "SQL done".Split('|'));
             }

@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Common.Tools;
+using LazyStock.ScheduleServices.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using Common.Tools;
-using LazyStock.ScheduleServices.Model;
-using Newtonsoft.Json;
 
 namespace LazyStock.ScheduleServices.Services
 {
@@ -28,8 +27,7 @@ namespace LazyStock.ScheduleServices.Services
         protected String CheckDoneFileName;
         protected String CheckDoneFullPath;
         protected String DownloadData = "";
-        List<StockPriceDataModel> StockPricesList;
-
+        private List<StockPriceDataModel> StockPricesList;
 
         public DeilyPriceGTSMCrawlerServcies()
         {
@@ -69,18 +67,16 @@ namespace LazyStock.ScheduleServices.Services
                 throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]Before Done, do nothing!");
 
             if (Setting.AppSettings("DeilyPriceGTSMAlwaysGetYN") != "Y")
-                if ((GetDate.Hour <= 18 && GetDate.Hour >=8))
+                if ((GetDate.Hour <= 18 && GetDate.Hour >= 8))
                     throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]8~18交易時間禁止抓取!");
         }
 
         public override void Download()
         {
-
             String url = DownloadUrl.Replace("@t", GetDate.Ticks.ToString());
 
             using (WebClient wClient = new WebClient())
                 DownloadData = wClient.DownloadString(url);
-
 
             if (DownloadData.IndexOf(@"""") < 0)
                 throw new Exception("錯誤的資料格式!");
@@ -119,7 +115,7 @@ namespace LazyStock.ScheduleServices.Services
                 StockPricesList.Add(new StockPriceDataModel
                 {
                     StockNum = CsvStockNum,
-                    StockPrice = Math.Round(CsvPrice,2)
+                    StockPrice = Math.Round(CsvPrice, 2)
                 });
             }
             UploadData();
@@ -150,7 +146,6 @@ namespace LazyStock.ScheduleServices.Services
                 }
                 System.IO.File.WriteAllText(this.CheckDoneFullPath, "done");
                 LogHelper.doLog(this.ClassName, "[Succ]Done");
-
             }
             catch (Exception ex)
             {

@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Data;
 
 namespace Common.DataAccess
 {
     /// <summary>
     /// 資料庫參數
     /// </summary>
-    class DbParam
+    internal class DbParam
     {
-
         public enum LikeMode { Left, Right, Both };
+
         private static string LinkTemp = "And <COL1> Like <L> +@<COL2> +<R> ";
 
         /// <summary>
@@ -23,7 +21,6 @@ namespace Common.DataAccess
         {
             return new String[] { CharFilter(Value), CharFilter(ConditionsTemplete) };
         }
-
 
         /// <summary>
         /// 產出link語法
@@ -42,16 +39,17 @@ namespace Common.DataAccess
                 case LikeMode.Right:
                     LikeString = LikeString.Replace("<R>", "'%'").Replace("<L>", "");
                     break;
+
                 case LikeMode.Left:
                     LikeString = LikeString.Replace("<R>", "").Replace("<L>", "'%'");
                     break;
+
                 case LikeMode.Both:
                     LikeString = LikeString.Replace("<R>", "'%'").Replace("<L>", "'%'");
                     break;
             }
 
             return new String[] { CharFilter(Value), LikeString };
-
         }
 
         /// <summary>
@@ -63,7 +61,5 @@ namespace Common.DataAccess
         {
             return Value.Replace("'", "＇").Replace("--", "－－");
         }
-
-
     }
 }

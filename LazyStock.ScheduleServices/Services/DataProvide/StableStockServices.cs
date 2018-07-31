@@ -4,17 +4,15 @@ using LazyStock.ScheduleServices.EFModel;
 using LazyStock.ScheduleServices.Model;
 using LazyStock.ScheduleServices.Model.Data;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace LazyStock.ScheduleServices.Services.DataProvide
 {
-    class StableStockServices
+    internal class StableStockServices
     {
         public static List<HighQualityListModel> QueryQuality()
         {
@@ -25,12 +23,12 @@ namespace LazyStock.ScheduleServices.Services.DataProvide
             {
                 cfg.CreateMap<QueryHighQualityList_Result, HighQualityListModel>();
             });
-            
+
             IMapper iMapper = config.CreateMapper();
 
             using (StockEntities db = new StockEntities())
             {
-                db.Database.ExecuteSqlCommand(" GenStockInfo @StockNum ",new SqlParameter("StockNum", ""));
+                db.Database.ExecuteSqlCommand(" GenStockInfo @StockNum ", new SqlParameter("StockNum", ""));
                 SpHighQualityList = db.QueryHighQualityList(0.05).ToList();
             }
 
@@ -38,14 +36,11 @@ namespace LazyStock.ScheduleServices.Services.DataProvide
             {
                 HighQualityListModel r = iMapper.Map<QueryHighQualityList_Result, HighQualityListModel>(t);
                 HighQualityList.Add(r);
-
-
             });
 
             LogHelper.doLog("StableStockServices_QueryQuality", JsonConvert.SerializeObject(HighQualityList));
             return HighQualityList;
         }
-
 
         public static List<HighQualityListModel> QueryHighQualityListForSlot()
         {
@@ -69,7 +64,6 @@ namespace LazyStock.ScheduleServices.Services.DataProvide
                 HighQualityListModel r = iMapper.Map<QueryHighQualityListForSlot_Result, HighQualityListModel>(t);
                 HighQualityList.Add(r);
             });
-
 
             for (int i = 0; i < HighQualityList.Count; i = i + 100)
             {

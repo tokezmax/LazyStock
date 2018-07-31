@@ -1,16 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Collections;
-using System.Runtime.Serialization;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Linq;
+using System.Reflection;
 
 namespace Common.Extensions
 {
     /// <summary>
     /// Object 的擴充方法
-    /// 
+    ///
     /// </summary>
     public static class ObjectExtension
     {
@@ -143,6 +141,6 @@ namespace Common.Extensions
             }
         }
 
-        #endregion
+        #endregion 私有方法
     }
 }

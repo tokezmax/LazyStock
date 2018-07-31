@@ -8,7 +8,7 @@
 
     /* Public Propertites */
     //self.data = o.data || null;
-    
+
     /* <public method> */
     self.RoundX = function (x, y) {
         var temp = 1;
@@ -68,7 +68,6 @@ $.fn.ApiResponse = {
 *  Base64 encode / decode
 */
 function Base64() {
-
     // private property
     _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
@@ -141,7 +140,6 @@ function Base64() {
                 utftext += String.fromCharCode(((c >> 6) & 63) | 128);
                 utftext += String.fromCharCode((c & 63) | 128);
             }
-
         }
         return utftext;
     }

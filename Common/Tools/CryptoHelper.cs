@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security;
 using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Xml;
 
 namespace Common
 {
     public static class CryptoHelper
     {
-       
         /// <summary>
         /// 對字串做TripleDES加密
         /// </summary>
@@ -21,7 +14,6 @@ namespace Common
         /// <returns></returns>
         public static string Encrypt3DES(string sourceString, string secretKey)
         {
-            
             TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
             DES.Key = UTF8Encoding.UTF8.GetBytes(System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(secretKey.PadRight(24, '0'), "md5").Substring(0, 24));
             DES.Mode = CipherMode.ECB;
@@ -65,7 +57,5 @@ namespace Common
             result = UTF8Encoding.UTF8.GetString(DESDecrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
             return result;
         }
-
-
     }
 }

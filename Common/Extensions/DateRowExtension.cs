@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Data;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
-using Newtonsoft.Json;
 
 namespace Common.Extensions
 {
     public static class DateRowExtension
     {
         #region 取值方法
+
         /// <summary>
         /// Get Parameter and convert to String . if the exception occurred will return empty string.
         /// </summary>
@@ -18,12 +15,14 @@ namespace Common.Extensions
         /// <returns>String</returns>
         public static string GetString(this DataRow Self, String FieldName)
         {
-            try{
+            try
+            {
                 if (!DBNull.Value.Equals(Self[FieldName]))
                     return Self[FieldName].ToString();
                 return String.Empty;
             }
-            catch {
+            catch
+            {
                 return "";
             }
         }
@@ -42,10 +41,12 @@ namespace Common.Extensions
                     return Convert.ToInt32(Self[FieldName].ToString());
                 return 0;
             }
-            catch {
+            catch
+            {
                 return 0;
             }
         }
+
         /// <summary>
         /// Get Parameter and convert to Double . if the exception occurred will return 0.
         /// </summary>
@@ -106,6 +107,7 @@ namespace Common.Extensions
                 return null;
             }
         }
-        #endregion
+
+        #endregion 取值方法
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
 
 namespace LazyStock.Web.Models
 {
@@ -10,9 +7,10 @@ namespace LazyStock.Web.Models
     {
         public StockInfoResModel()
         {
-            
         }
+
         #region 基礎資訊
+
         public string StockNum { get; set; }
         public string StockName { get; set; }
         public Nullable<double> Value { get; set; }
@@ -49,10 +47,13 @@ namespace LazyStock.Web.Models
         public Nullable<double> EstimateUnstablePrice7 { get; set; }
         public Nullable<double> EstimateStablePrice10 { get; set; }
         public Nullable<double> EstimateUnstablePrice10 { get; set; }
-        #endregion
+
+        #endregion 基礎資訊
 
         #region 詳細資訊
+
         public List<EPS_DiviDataModel> EPS_Divi { get; set; }
-        #endregion
+
+        #endregion 詳細資訊
     }
 }

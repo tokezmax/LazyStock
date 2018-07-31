@@ -97,7 +97,7 @@ namespace Common.Extensions
             catch { return defaultValue; }
         }
 
-        #endregion
+        #endregion 日期相關
 
         private const RegexOptions RegexOptions = System.Text.RegularExpressions.RegexOptions.ECMAScript | System.Text.RegularExpressions.RegexOptions.Compiled;
 

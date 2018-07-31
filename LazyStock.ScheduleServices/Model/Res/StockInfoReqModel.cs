@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace LazyStock.ScheduleServices.Model
 {
-    public class StockInfoResModel 
+    public class StockInfoResModel
     {
         #region 基礎資訊
+
         public string StockNum { get; set; }
         public string StockName { get; set; }
         public Nullable<double> Value { get; set; }
@@ -42,10 +43,13 @@ namespace LazyStock.ScheduleServices.Model
         public Nullable<double> EstimateUnstablePrice7 { get; set; }
         public Nullable<double> EstimateStablePrice10 { get; set; }
         public Nullable<double> EstimateUnstablePrice10 { get; set; }
-        #endregion
+
+        #endregion 基礎資訊
 
         #region 詳細資訊
+
         public List<EPS_DiviDataModel> EPS_Divi { get; set; }
-        #endregion
+
+        #endregion 詳細資訊
     }
 }

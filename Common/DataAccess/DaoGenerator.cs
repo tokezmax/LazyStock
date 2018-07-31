@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Data;
 using System.IO;
-using System.Collections;
 
 namespace Common.DataAccess
 {
@@ -75,7 +75,7 @@ namespace Common.DataAccess
                 DataTable dt = new DataTable();//= Dao.SelectFn("dbo.uvSmsPlatformTables", ColNames, null, ConnectionString);
                 //uvSmsPlatformTables =select
                 //distinct name
-                //from sys.tables WITH(NOLOCK) 
+                //from sys.tables WITH(NOLOCK)
                 //where name not in ('sysdiagrams')
                 foreach (DataRow R in dt.Rows)
                     GenTableNames += R["name"].ToString() + "-";

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
 
 namespace LazyStock.Web.Models
 {
@@ -10,9 +6,10 @@ namespace LazyStock.Web.Models
     {
         public HighQualityResModel()
         {
-            
         }
+
         #region 基礎資訊
+
         public string StockNum { get; set; }
         public string StockName { get; set; }
         public Nullable<double> Price { get; set; }
@@ -25,6 +22,7 @@ namespace LazyStock.Web.Models
         public double DiffFuturePrice { get; set; }
         public string RevenueYYYYMM { get; set; }
         public Nullable<double> RevenueGrowthRatio { get; set; }
-        #endregion
+
+        #endregion 基礎資訊
     }
 }

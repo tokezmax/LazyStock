@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
+using System.Text;
 using System.Threading;
-using System.Collections;
-using Common;
+
 namespace Common.Tools
 {
     public sealed class LogHelper
@@ -32,7 +30,6 @@ namespace Common.Tools
             //return "UNDER";
             //return dirName.Item(K);
         }
-
 
         /// <summary>
         /// ¼g¤Jlog
@@ -73,7 +70,6 @@ namespace Common.Tools
 
                 if (!File.Exists(FilePath))
                 {
-
                     using (StreamWriter f = File.CreateText(FilePath))
                     {
                         f.Flush();
@@ -92,13 +88,13 @@ namespace Common.Tools
             }
             catch// (Exception ex)
             {
-
             }
             finally
             {
                 LogLock.ReleaseMutex();
             }
         }
+
         public static void FileOverWrite(string FilePath, string Message, bool timestemp = true)
         {
             try
@@ -112,7 +108,6 @@ namespace Common.Tools
 
                 if (!File.Exists(FilePath))
                 {
-
                     using (StreamWriter f = File.CreateText(FilePath))
                     {
                         f.Flush();
@@ -121,11 +116,9 @@ namespace Common.Tools
                 }
 
                 System.IO.File.WriteAllText(FilePath, Message, Encoding.UTF8);
-
             }
             catch// (Exception ex)
             {
-
             }
             finally
             {
@@ -133,5 +126,4 @@ namespace Common.Tools
             }
         }
     }
-
 }

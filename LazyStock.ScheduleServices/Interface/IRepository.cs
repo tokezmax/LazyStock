@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
- 
+
 namespace LazyStock.ScheduleServices.Interface
 {
     public interface IRepository<TEntity> : IDisposable
@@ -21,6 +18,5 @@ namespace LazyStock.ScheduleServices.Interface
         IQueryable<TEntity> GetAll();
 
         void SaveChanges();
-
     }
 }

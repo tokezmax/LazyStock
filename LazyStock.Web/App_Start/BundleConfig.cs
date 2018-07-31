@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace LazyStock.Web
 {
@@ -26,7 +25,6 @@ namespace LazyStock.Web
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
-
             bundles.Add(new StyleBundle("~/bundles/css").Include(
                 "~/css/bootstrap.min.css",
                 "~/css/owl.carousel.css",
@@ -37,7 +35,7 @@ namespace LazyStock.Web
                 "~/css/style.css",
                 "~/css/toast.css"
             ));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/js/jquery.min.js",
                 "~/js/bootstrap.min.js",

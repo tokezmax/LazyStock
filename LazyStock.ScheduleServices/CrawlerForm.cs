@@ -25,7 +25,6 @@ namespace LazyStock.ScheduleServices
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
             String DownloadDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\DataSource\TWSEStockPriceEveryDay\";
             String DownloadFileName = TokenGenerator.GetTimeStamp(3) + ".csv";
             String DownloadFullPath = DownloadDirPath + DownloadFileName;
@@ -47,8 +46,6 @@ namespace LazyStock.ScheduleServices
                 using (WebClient wClient = new WebClient())
                     DownloadData = wClient.DownloadString(DownloadUrl);
 
-
-
                 //if (DownloadData.IndexOf(@"證券代號") < 0)
                     //throw new Exception("錯誤的資料格式!");
 
@@ -63,7 +60,6 @@ namespace LazyStock.ScheduleServices
         private void button2_Click(object sender, EventArgs e)
         {
             String DownloadDirPath2 = AppDomain.CurrentDomain.BaseDirectory + @"\DataSource\TWSEStockPriceEveryDay\";
-            
 
             String DownloadDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\DataSource\TWSEStockPriceEveryDay\OKData\";
             String DownloadFileName = TokenGenerator.GetTimeStamp(3) + ".csv";
@@ -80,8 +76,6 @@ namespace LazyStock.ScheduleServices
                 if (!System.IO.File.Exists(DownloadFullPath))
                     continue;
 
-                
-
                 String DownloadData = System.IO.File.ReadAllText(DownloadFullPath);
                 if (!String.IsNullOrEmpty(DownloadData))
                     DownloadData = DownloadData.Substring(DownloadData.IndexOf(@"證券代號") - 1).Replace("=\"", "\"");
@@ -90,9 +84,7 @@ namespace LazyStock.ScheduleServices
                 if (System.IO.File.Exists(DownloadFullPath))
                     continue;
 
-                
                 System.IO.File.WriteAllText(DownloadFullPath, DownloadData);
-
             }
         }
 
@@ -102,14 +94,10 @@ namespace LazyStock.ScheduleServices
             //String DownloadFileName = TokenGenerator.GetTimeStamp(3) + ".csv";
             //String DownloadFullPath = DownloadDirPath + DownloadFileName;
 
-            
-
-            
             foreach (String DownloadFullPath in System.IO.Directory.GetFiles(DownloadDirPath, "*.csv")) {
                 List<StockPriceDay> StockPriceDayList = new List<StockPriceDay>();
                 String YYYYMMDD = System.IO.Path.GetFileNameWithoutExtension(DownloadFullPath);
                 var csv = new CsvHelper.CsvReader(System.IO.File.OpenText(DownloadFullPath));
-
 
                 if (DataExists(YYYYMMDD))
                     continue;
@@ -119,12 +107,10 @@ namespace LazyStock.ScheduleServices
                     StockPriceDay Additem = new StockPriceDay();
                     try
                     {
-                        
                         Additem.StockNum = csv.GetField<string>(0).Replace(" ", "");
                         if (Additem.StockNum == "證券代號") continue;
                         if (Additem.StockNum.Length != 4)
                             continue;
-                        
                     }
                     catch{
                         continue;
@@ -213,13 +199,10 @@ namespace LazyStock.ScheduleServices
                     Console.WriteLine($"{YYYYMMDD}-完成筆數：{ rowsChanged}");
                 }
             }
-
-            
-
         }
+
         public bool DataExists(String TraDate)
         {
-
             using (var cn = new SqlConnection(Setting.ConnectionString("Stock")))
             {
                 cn.Open();

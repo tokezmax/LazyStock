@@ -1,29 +1,16 @@
-﻿using Common.Tools;
-using LazyStock.ScheduleServices.Model;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
-using Common.Extensions;
-using System.Data.SqlClient;
-using System.Collections;
-using LazyStock.ScheduleServices.Services;
+﻿using LazyStock.ScheduleServices.Services;
 using LazyStock.ScheduleServices.Services.DataArchive;
 using LazyStock.ScheduleServices.Services.Notifly;
+using System;
+using System.ServiceProcess;
+using System.Timers;
 
 namespace LazyStock.ScheduleServices
 {
     public partial class Service1 : ServiceBase
     {
         public static bool IsBusy = false;
+
         public Service1()
         {
             InitializeComponent();
@@ -41,10 +28,11 @@ namespace LazyStock.ScheduleServices
             try
             {
                 RunInterval = Int32.Parse(Common.Tools.Setting.AppSettings("RunSec")) * 1000;
-            }catch { }
+            }
+            catch { }
             //做什麼事情可以寫成method丟進去，sample為寫log
             MyTimer.Interval = RunInterval; //代表時間間隔，單位為毫秒，設定2000代表2秒
-            MyTimer.Start(); //啟動timer            
+            MyTimer.Start(); //啟動timer
         }
 
         private void doSomething(object sender, ElapsedEventArgs e) //寫log
@@ -67,7 +55,6 @@ namespace LazyStock.ScheduleServices
 
                     try
                     {
-
                         BaseCrawlerServcies DataCrawler = (BaseCrawlerServcies)Activator.CreateInstance(Type.GetType("LazyStock.ScheduleServices.Services." + typeFullName));
                         DataCrawler.Init();
                         DataCrawler.CheckIsDone();
@@ -96,9 +83,9 @@ namespace LazyStock.ScheduleServices
                 IsBusy = false;
             }
         }
+
         protected override void OnStop()
         {
-
         }
     }
 }

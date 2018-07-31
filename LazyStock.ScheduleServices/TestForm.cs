@@ -9,9 +9,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -38,7 +36,6 @@ namespace LazyStock.ScheduleServices
             {
                 MessageBox.Show(ex.Message);
             }
-
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -68,19 +65,20 @@ namespace LazyStock.ScheduleServices
                 {
                     try
                     {
-                   
-                            BaseCrawlerServcies DataCrawler = (BaseCrawlerServcies)Activator.CreateInstance(Type.GetType("LazyStock.ScheduleServices.Services." + typeFullName));
-                            DataCrawler.Init();
-                            DataCrawler.CheckIsDone();
-                            DataCrawler.Download();
-                            DataCrawler.ImportDate();
+                        BaseCrawlerServcies DataCrawler = (BaseCrawlerServcies)Activator.CreateInstance(Type.GetType("LazyStock.ScheduleServices.Services." + typeFullName));
+                        DataCrawler.Init();
+                        DataCrawler.CheckIsDone();
+                        DataCrawler.Download();
+                        DataCrawler.ImportDate();
                     }
-                    catch (Exception eex){
-                        ErrorStr += "["+ typeFullName + "]" + eex.Message+"\r\n";
+                    catch (Exception eex)
+                    {
+                        ErrorStr += "[" + typeFullName + "]" + eex.Message + "\r\n";
                     }
                 }
             }
-            catch (Exception ex){
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
             MessageBox.Show(ErrorStr);
@@ -114,22 +112,20 @@ namespace LazyStock.ScheduleServices
 
         private void button7_Click(object sender, EventArgs e)
         {
-            
-
             DeilyStockNotiflyServices a = new DeilyStockNotiflyServices();
             var tg = Task.Run(() => a.DoNotifly());
             tg.Wait();
 
             return;
 
-            List<HighQualityListModel> QueryQuality = 
+            List<HighQualityListModel> QueryQuality =
                 StableStockServices.QueryQuality();
 
             String Context = "";
-            
+
             int i = 0;
 
-            String temp = DateTime.Now.ToString("yyyyMMdd")+ "(預測型)價提醒: \r\n";
+            String temp = DateTime.Now.ToString("yyyyMMdd") + "(預測型)價提醒: \r\n";
             QueryQuality.ForEach(t =>
             {
                 temp += $"{t.StockNum}{t.StockName} \r\n";
@@ -153,7 +149,8 @@ namespace LazyStock.ScheduleServices
 
                 //https://api.line.me/v2/bot/message/multicast
             }
-            catch {
+            catch
+            {
                 bot.PushMessage(AdminUserId, $" {DateTime.Now.ToString()} ，群發發生錯誤");
             }
         }
@@ -178,11 +175,9 @@ namespace LazyStock.ScheduleServices
             client.Encoding = Encoding.UTF8;
             client.Headers.Add(HttpRequestHeader.ContentType, "application/json");
             client.Headers.Add("Authorization", channelAccessToken);
-            
+
             var response = client.UploadString(_uri, "POST", content);
             //string resResult = Encoding.UTF8.GetString(response);
-            
-
 
             /*
             //request.Content = new StringContent(content, Encoding.UTF8, "application/json");
@@ -194,7 +189,6 @@ namespace LazyStock.ScheduleServices
                 MessageBox.Show($"{response.StatusCode}/失敗");
             */
 
-
             //await response.EnsureSuccessStatusCodeAsync().ConfigureAwait(false);
         }
 
@@ -205,8 +199,6 @@ namespace LazyStock.ScheduleServices
 
             try
             {
-               
-
                 string[] typenames = "DeilyPriceTWSECrawlerServcies,DeilyPriceTPEXCrawlerServcies,DeilyPriceGTSMCrawlerServcies".Split(',');
                 foreach (String typeFullName in typenames)
                 {
@@ -214,7 +206,6 @@ namespace LazyStock.ScheduleServices
 
                     try
                     {
-
                         BaseCrawlerServcies DataCrawler = (BaseCrawlerServcies)Activator.CreateInstance(Type.GetType("LazyStock.ScheduleServices.Services." + typeFullName));
                         DataCrawler.Init();
                         DataCrawler.CheckIsDone();
@@ -242,7 +233,6 @@ namespace LazyStock.ScheduleServices
                 Common.Tools.LogHelper.doLog("Common", "[" + TraSn + "]UnBusy");
             }
         }
-
 
         private void button9_Click_1(object sender, EventArgs e)
         {

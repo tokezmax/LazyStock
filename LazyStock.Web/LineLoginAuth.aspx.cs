@@ -7,12 +7,10 @@ namespace LazyStock.Web
 {
     public partial class LineLoginAuth : System.Web.UI.Page
     {
- 
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
-      
+
         protected override void Render(HtmlTextWriter writer)
         {
             StringWriter html = new StringWriter();

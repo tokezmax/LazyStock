@@ -4,12 +4,12 @@
         type: "post",
         dataType: 'json',
         contentType: "application/json;charset=utf-8",
-        beforeSend: function (xhr, opts) {},
-        success: function (data) {},
-        error: function (xhr, ajaxOptions, thrownError) {},
-        complete: function () {}
+        beforeSend: function (xhr, opts) { },
+        success: function (data) { },
+        error: function (xhr, ajaxOptions, thrownError) { },
+        complete: function () { }
     }, $.fn.BC.Setting, arguments[0] || { CalenderElement: $(this) });
-    
+
     /* Private Propertites */
     // Create self constant in class
     var self = this;
@@ -17,9 +17,6 @@
     // initialize options parameter for definition
     var opts = options || {};
 
- 
-  
- 
     var targetUrl = 'Data/GetStockInfo?StockNum=' + x + '&t=' + CommonHelper.GenRandom(5);
     $.ajax({
         type: "post",
@@ -56,7 +53,6 @@
             CurrDivi = Math.floor(CurrDivi * 10000) / 100;
             $("#StockInfoCurrDivi").html(CurrDivi).append('%');
 
-
             setStockStatus("IsGrowingUpRevenue", StockInfoData.IsGrowingUpRevenue);
 
             setStockStatus("IsPromisingEPS", StockInfoData.IsPromisingEPS);
@@ -71,11 +67,9 @@
             setStockStatus("IsSafeInvestor", StockInfoData.IsSafeInvestor);
             setStockStatus("IsSafeValue", StockInfoData.IsSafeValue);
 
-
             $(".StockStatus").show();
             setStgPrice();
             setRiskStatus();
-
 
             $('.contact ').eq(0).html('<i class="fa fa-phone"></i><h3> 基本資料</h3>');
             $('.contact ').eq(1).html('<i class="fa fa-phone"></i><h3> 年份／股息</h3>');
@@ -94,7 +88,6 @@
                 if (value.LastQ === 'Q4')
                     $('.contact ').eq(1).append(value.Year + value.LastQ + '／' + value.TotalDivi + "<BR>");
             });
-
         },
         error: function (xhr, ajaxOptions, thrownError) {
             alert('通訊異常');
@@ -123,19 +116,17 @@ var Ajax = function (options) {
 
     /* Constructor */
     var __constructor = function () {
-
         // Construct code
     }
 
     /* <public method> Initialize with callback function */
     self.init = function (callback) {
-
         loadData(callback);
     }
 
     /* <public method> Render */
     self.render = function (options) {
-        // Load data if no data 
+        // Load data if no data
         if (self.data === null) {
             loadData(function () {
                 self.render(options)
@@ -148,7 +139,6 @@ var Ajax = function (options) {
 
     /* <private method> Load data from AJAX */
     var loadData = function (callback) {
-
         // Check if is loading
         if (isLoading) {
             // Retry later
@@ -160,7 +150,7 @@ var Ajax = function (options) {
 
         isLoading = true;
         // Load data by AJAX
-        
+
         $.get(self.ajaxUrl, function (data) {
             self.data = data;
             isLoading = false;

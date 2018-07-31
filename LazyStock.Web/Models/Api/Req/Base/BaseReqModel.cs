@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace LazyStock.Web.Models
 {
@@ -12,6 +8,7 @@ namespace LazyStock.Web.Models
         {
             Ver = 1;
         }
+
         public int Ver { get; set; }
 
         [JsonIgnore]

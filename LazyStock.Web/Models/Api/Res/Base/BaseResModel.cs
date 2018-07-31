@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Common.Tools;
 using Newtonsoft.Json;
-using Common.Tools;
 
 namespace LazyStock.Web.Models
 {
@@ -33,6 +29,7 @@ namespace LazyStock.Web.Models
                 _Message = value;
             }
         }
+
         [JsonProperty(Order = 3, NullValueHandling = NullValueHandling.Ignore)]
         public T Result { get; set; }
     }

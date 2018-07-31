@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.IO.Compression;
 
 namespace Common.Tools
 {
-    class ZipHelper
+    internal class ZipHelper
     {
-
-        /// 
+        ///
         /// 將傳入的字串以GZip演算法壓縮後，傳回Base64編碼字串
-        /// 
+        ///
         /// 要壓縮的字串
         /// 壓縮後的字串(Base64)
         public string GZipCompressString(string rawString)
@@ -27,10 +23,7 @@ namespace Common.Tools
                 byte[] zippedData = Compress(rawData);
                 return (string)(Convert.ToBase64String(zippedData));
             }
-
         }
-
-
 
         //GZip壓縮
         private byte[] Compress(byte[] rawData)
@@ -42,11 +35,9 @@ namespace Common.Tools
             return ms.ToArray();
         }
 
-
-
-        /// 
+        ///
         /// 將傳入的二進位字串資料以GZip演算法解壓縮
-        /// 
+        ///
         /// 傳入經GZip壓縮後的二進位字串資料
         /// 傳回原後的未壓縮原始字串資料
         public string GZipDecompressString(string zippedString)
@@ -61,7 +52,6 @@ namespace Common.Tools
                 return (string)(System.Text.Encoding.UTF8.GetString(Decompress(zippedData)));
             }
         }
-
 
         //GZip解壓縮
         private byte[] Decompress(byte[] zippedData)
@@ -81,10 +71,5 @@ namespace Common.Tools
             compressedzipStream.Close();
             return outBuffer.ToArray();
         }
-
     }
 }
-
-
-
-

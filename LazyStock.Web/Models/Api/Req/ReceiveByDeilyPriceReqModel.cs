@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace LazyStock.Web.Models
 {
@@ -9,6 +6,7 @@ namespace LazyStock.Web.Models
     {
         public List<StockPriceDataModel> StockPrices { get; set; }
     }
+
     /*
     public class StockPrice
     {

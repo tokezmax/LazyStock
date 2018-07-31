@@ -10,20 +10,20 @@ namespace Common.Extensions
         /// </summary>
         /// <param name="datetime">日期</param>
         /// <returns>yyyy/MM/dd HH:mm:ss格式字串</returns>
-        public static string GetFullDateTime(this DateTime datetime,String DateSplitChar = "/")
+        public static string GetFullDateTime(this DateTime datetime, String DateSplitChar = "/")
         {
             return datetime.ToString("yyyy" + DateSplitChar + "MM" + DateSplitChar + "dd HH:mm:ss");
         }
+
         /// <summary>
         /// 取得yyyy/MM/dd格式字串
         /// </summary>
         /// <param name="datetime">日期</param>
         /// <returns>yyyy/MM/dd格式字串</returns>
-        public static string GetFullDate(this DateTime datetime,String DateSplitChar = "/")
+        public static string GetFullDate(this DateTime datetime, String DateSplitChar = "/")
         {
             return datetime.ToString("yyyy" + DateSplitChar + "MM" + DateSplitChar + "dd");
         }
-
 
         /// <summary>
         /// To the full taiwan date.
@@ -54,6 +54,5 @@ namespace Common.Extensions
                 datetime.ToString("MM"),
                 datetime.ToString("dd"));
         }
-
     }
 }

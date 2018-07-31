@@ -1,10 +1,10 @@
-﻿using System;
+﻿using LazyStock.ScheduleServices.EFModel;
+using LazyStock.ScheduleServices.Interface;
+using System;
 using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Linq.Expressions;
-using LazyStock.ScheduleServices.EFModel;
-using LazyStock.ScheduleServices.Interface;
 
 namespace LazyStock.ScheduleServices.Repository
 {
@@ -40,8 +40,6 @@ namespace LazyStock.ScheduleServices.Repository
             this._context = new DbContext(context, true);
         }
 
-
-
         /// <summary>
         /// Creates the specified instance.
         /// </summary>
@@ -58,7 +56,6 @@ namespace LazyStock.ScheduleServices.Repository
                 this._context.Set<TEntity>().Add(instance);
                 this.SaveChanges();
             }
-
         }
 
         /// <summary>
@@ -116,7 +113,6 @@ namespace LazyStock.ScheduleServices.Repository
             return this._context.Set<TEntity>().AsQueryable();
         }
 
-
         public void SaveChanges()
         {
             this._context.SaveChanges();
@@ -139,6 +135,5 @@ namespace LazyStock.ScheduleServices.Repository
                 }
             }
         }
-
     }
 }

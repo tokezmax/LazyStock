@@ -1,38 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web;
-using System.Web.Mvc;
-using Common;
-using Common.Extensions;
-using Common.Tools;
-using Newtonsoft.Json;
+﻿using Common.Tools;
 using LazyStock.Web.Models;
-using System.Collections;
-using Newtonsoft.Json.Linq;
 using LiteDB;
-using System.Threading.Tasks;
-using System.Text;
-using System.IO;
-using CsvHelper.Configuration;
+using System;
+using System.Web.Mvc;
 
 namespace LazyStock.Web.Controllers
 {
     public class ImportDataController : Controller
     {
         #region
+
         /// <summary>
         /// 資料庫存放位置
         /// </summary>
         /// LazyStockDBPath
         public static String StockInfoJsonDirPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\JsonData\";
+
         public static String LazyStockDBPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\LazyStockDB.db";
         public static String LazySlotDBPath = AppDomain.CurrentDomain.BaseDirectory + @"\App_Data\LazySlotDB.db";
         #endregion
-
 
         /// <summary>
         /// 接收(Json)更新股價
@@ -61,8 +47,7 @@ namespace LazyStock.Web.Controllers
                             if (DbStockPrice == null)
                                 continue;
 
-
-                            DbStockPrice.Price = Math.Round( items.StockPrice,2);
+                            DbStockPrice.Price = Math.Round(items.StockPrice, 2);
                             DbStockPrice.PriceModifyDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                             StockInfos.Update(items.StockNum, DbStockPrice);
                             SuccCount++;
@@ -182,10 +167,5 @@ namespace LazyStock.Web.Controllers
             }
             return Json(result, JsonRequestBehavior.AllowGet);
         }
-
-
-
-
-
     }
 }

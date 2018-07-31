@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LazyStock.ScheduleServices.Interface
+﻿namespace LazyStock.ScheduleServices.Interface
 {
-    interface ICrawler
+    internal interface ICrawler
     {
-
     }
 }

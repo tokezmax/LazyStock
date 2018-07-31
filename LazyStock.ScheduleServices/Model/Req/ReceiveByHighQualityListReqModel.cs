@@ -1,9 +1,5 @@
-﻿using System;
+﻿using LazyStock.ScheduleServices.Model.Data;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using LazyStock.ScheduleServices.Model.Data;
-using Newtonsoft.Json;
 
 namespace LazyStock.ScheduleServices.Model
 {

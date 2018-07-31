@@ -1,16 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace Common.Tools
 {
     /// <summary>
-    /// enum class information service 
+    /// enum class information service
     /// </summary>
     public static class EnumInfoHelper
     {
         /// <summary>
-        /// Get enum description 
+        /// Get enum description
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>

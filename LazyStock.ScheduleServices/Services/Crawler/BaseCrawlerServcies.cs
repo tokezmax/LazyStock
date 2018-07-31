@@ -1,8 +1,8 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
-using NLog;
 
 namespace LazyStock.ScheduleServices.Services
 {
@@ -36,20 +36,18 @@ namespace LazyStock.ScheduleServices.Services
         /// </summary>
         /// <returns></returns>
         public abstract void ImportDate();
-        
+
         /// <summary>
         /// 上傳至AWS
         /// </summary>
         /// <returns></returns>
         protected abstract void UploadData();
 
-
         /// <summary>
         /// 更新LOCALDB
         /// </summary>
         /// <returns></returns>
         protected abstract void UpdateLocalDB();
-
 
         /// <summary>
         /// 取得呼叫簡訊商API的回傳結果(x-www-form-urlencoded)

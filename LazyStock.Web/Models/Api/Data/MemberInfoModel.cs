@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace LazyStock.Web.Models
+﻿namespace LazyStock.Web.Models
 {
     public class MemberInfoModel
     {
-
         public string Id { get; set; }
 
         public string Email { get; set; }
@@ -29,5 +23,4 @@ namespace LazyStock.Web.Models
         public string statusMessage { get; set; }
         */
     }
-  
 }

@@ -1,29 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using LazyStock.ScheduleServices.EFModel;
-
-using System.Data.Entity;
-
-using AutoMapper;
-using LazyStock.ScheduleServices.Model;
-using Newtonsoft.Json;
+﻿using AutoMapper;
 using Common.Tools;
-using System.Net;
+using LazyStock.ScheduleServices.EFModel;
 using LazyStock.ScheduleServices.Interface;
+using LazyStock.ScheduleServices.Model;
 using LazyStock.ScheduleServices.Repository;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Net;
+using System.Text;
 
 namespace LazyStock.ScheduleServices.Services
 {
-    class StockInfoServices
+    internal class StockInfoServices
     {
         //private static IRepository<CalStockEachQAvgEPS> CalStockEachQAvgEPSRepo;
         private static IRepository<CalStockEPS_Divi> CalStockEPS_DiviRepo;
+
         private static IRepository<CalStockInfo> CalStockInfoRepo;
 
-        static StockInfoServices() {
+        static StockInfoServices()
+        {
             //CalStockEachQAvgEPSRepo = new GenericRepository<CalStockEachQAvgEPS>();
             CalStockEPS_DiviRepo = new GenericRepository<CalStockEPS_Divi>();
             CalStockInfoRepo = new GenericRepository<CalStockInfo>();
@@ -33,7 +32,6 @@ namespace LazyStock.ScheduleServices.Services
         {
             try
             {
-                
                 List<CalStockInfo> CalStockInfos = CalStockInfoRepo.GetAll().OrderBy(x => x.StockNum).ToList();
                 List<CalStockEPS_Divi> CalStockEPS_Divis = CalStockEPS_DiviRepo.GetAll().OrderBy(x => x.StockNum).ThenByDescending(n => n.Year).ToList();
                 //StockEntities _context = new StockEntities();
@@ -42,8 +40,9 @@ namespace LazyStock.ScheduleServices.Services
 
                 ReceiveByStockInfoReqModel StockInfos = new ReceiveByStockInfoReqModel();
                 StockInfos.StockInfos = new List<StockInfoResModel>();
-                var config = new MapperConfiguration(cfg => {
-                    cfg.CreateMap<CalStockInfo, StockInfoResModel>().ForMember(x=>x.EPS_Divi,opt =>opt.Ignore());
+                var config = new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<CalStockInfo, StockInfoResModel>().ForMember(x => x.EPS_Divi, opt => opt.Ignore());
                 });
                 IMapper iMapper = config.CreateMapper();
 
@@ -73,7 +72,7 @@ namespace LazyStock.ScheduleServices.Services
                     ReceiveByStockInfoReqModel r = new ReceiveByStockInfoReqModel();
 
                     r.StockInfos = items.ToList<StockInfoResModel>();
-                    
+
                     var jsonText = "{\"ReqParam\" : " + JsonConvert.SerializeObject(r) + @"}";
                     LogHelper.doLog("StockInfoServices", "==發送(" + r.StockInfos.Count().ToString() + "筆)==\r\n" + jsonText);
                     WebClient client = new WebClient();

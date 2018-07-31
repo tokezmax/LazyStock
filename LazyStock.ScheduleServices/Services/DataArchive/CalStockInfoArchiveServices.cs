@@ -1,20 +1,16 @@
 ﻿using Common.Tools;
 using LazyStock.ScheduleServices.EFModel;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LazyStock.ScheduleServices.Services.DataArchive
 {
-    class CalStockInfoArchiveServices
+    internal class CalStockInfoArchiveServices
     {
-        public  String CheckDoneDirPath = "";
-        public  String CheckDoneFileName = "";
-        public  String CheckDoneFullPath = "";
-        protected  DateTime GetDate;
+        public String CheckDoneDirPath = "";
+        public String CheckDoneFileName = "";
+        public String CheckDoneFullPath = "";
+        protected DateTime GetDate;
 
         public CalStockInfoArchiveServices()
         {
@@ -30,7 +26,7 @@ namespace LazyStock.ScheduleServices.Services.DataArchive
             CheckDoneFullPath = CheckDoneDirPath + CheckDoneFileName;
         }
 
-        public  void CheckIsDone()
+        public void CheckIsDone()
         {
             if (System.IO.File.Exists(CheckDoneFullPath))
                 throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]Before Done, do nothing!");

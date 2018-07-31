@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Data.SqlClient;
-using System.Data;
-using Common.Extensions;
+﻿using Common.Extensions;
 using Common.Tools;
+using System;
+using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Common.DataAccess
 {
     public class Dao
     {
         #region "Infrastructure Method"
+
         public static Hashtable Tables = new Hashtable();
+
         // public static List<DataBase> DataBases = new List<DataBase>();
         static Dao()
         {
@@ -33,9 +35,11 @@ namespace Common.DataAccess
                 }
             }
         }
-        #endregion
+
+        #endregion "Infrastructure Method"
 
         #region "Basis USP Method"
+
         /// <summary>
         /// Edit USP Row Data (Insert/Update/Delete)
         /// </summary>
@@ -104,6 +108,7 @@ namespace Common.DataAccess
             }
         }
         */
+
         /// <summary>
         /// Select USP Row Data
         /// </summary>
@@ -187,11 +192,12 @@ namespace Common.DataAccess
             }
         }
 
-        #endregion
+        #endregion "Basis USP Method"
 
         #region "因為和DBA政策，TSQL全改成走SP，故mark此區塊"
 
         #region "Basis Method"
+
         ///// <summary>
         ///// Insert Row Data
         ///// </summary>
@@ -439,7 +445,6 @@ namespace Common.DataAccess
         //        if (!String.IsNullOrWhiteSpace(Order))
         //            SqlCommand += " ORDER BY  " + Order.TrimEnd(',');
 
-
         //        DataTable DT = new DataTable();
         //        using (SqlConnection conn = new SqlConnection(ConnectionString))
         //        {
@@ -448,7 +453,6 @@ namespace Common.DataAccess
         //            MyCommand.CommandTimeout = 0;
         //            if (SQLParameter.Count > 0)
         //                MyCommand.Parameters.AddRange(SQLParameter.ToArray());
-
 
         //            using (SqlDataAdapter da = new SqlDataAdapter(MyCommand))
         //            {
@@ -477,7 +481,6 @@ namespace Common.DataAccess
         //{
         //    try
         //    {
-
         //        IsExistTable(DataBaseName, TableName);
 
         //        String[] ColumnNames = Tables.GetStrings(DataBaseName + "-" + TableName);
@@ -547,11 +550,13 @@ namespace Common.DataAccess
         //        throw new Exception("[Dao.UpdateOrInsert]" + ex.Message);
         //    }
         //}
-        #endregion
+
+        #endregion "Basis Method"
 
         #region "Customized Method"
+
         ///// <summary>
-        /////  Query DataTable 
+        /////  Query DataTable
         ///// </summary>
         ///// <param name="SqlCommand">SQL</param>
         ///// <param name="Conditions">Conditions</param>
@@ -585,9 +590,6 @@ namespace Common.DataAccess
                 throw new Exception("[Dao.QueryDataTable]" + ex.Message);
             }
         }
-
-
-
 
         /// <summary>
         /// single sql command execution
@@ -643,10 +645,8 @@ namespace Common.DataAccess
 
         //            try
         //            {
-
         //                for (int i = 0; i < SqlCommands.Length; i++)
         //                {
-
         //                    command.Parameters.Clear();
         //                    command.CommandText = SqlCommands[i];
 
@@ -723,7 +723,6 @@ namespace Common.DataAccess
         //    {
         //        String _SqlCommand = SqlCommand.TrimEnd(';') + ";Select isnull(SCOPE_IDENTITY(),0) as sn";
 
-
         //        using (SqlConnection conn = new SqlConnection(ConnectionString))
         //        {
         //            conn.Open();
@@ -740,12 +739,13 @@ namespace Common.DataAccess
         //    }
         //    finally
         //    {
-
         //    }
         //}
-        #endregion
+
+        #endregion "Customized Method"
 
         #region "運算式"
+
         //private static ArrayList GetSqlConditionsParameterList(ref String Condition, Hashtable Conditions, String[] ColumnNames)
         //{
         //    ArrayList SQLParameter = new ArrayList();
@@ -774,9 +774,11 @@ namespace Common.DataAccess
         //    }
         //    return SQLParameter;
         //}
-        #endregion
+
+        #endregion "運算式"
 
         #region 教學範例
+
         /*
         ==教學範例==
         Hashtable Colnames = new Hashtable();
@@ -785,7 +787,7 @@ namespace Common.DataAccess
         Hashtable Conditions = new Hashtable();
         Hashtable Order = new Hashtable();
     */
-        //●Update 
+        //●Update
         /*
             values.Clear();
             where.Clear();
@@ -800,7 +802,7 @@ namespace Common.DataAccess
             Dao.Update("Configs", values, where, SettingServices.ConnectionString("Sms"));
         */
 
-        //●Delete 
+        //●Delete
         /*
             where.Clear();
             where.Add("Groups", DbParam.Get("ZZ", "And Groups=@Groups"));
@@ -809,7 +811,7 @@ namespace Common.DataAccess
             Dao.Delete("Configs", where, SettingServices.ConnectionString("Sms"),false);
         */
 
-        //●Insert 
+        //●Insert
         /*
             values.Clear();
             values.Add("Groups", DbParam.Get("ZZ", "@Groups"));
@@ -849,7 +851,7 @@ namespace Common.DataAccess
             );
         */
 
-        //●IsExist 
+        //●IsExist
         /*
             where.Clear();
             where.Add("Groups", DbParam.Get("ZZ", "And Groups=@Groups"));
@@ -860,7 +862,7 @@ namespace Common.DataAccess
             );
         */
 
-        //●Select 
+        //●Select
         /*
             Order.Clear();
             Colnames.Clear();
@@ -871,7 +873,7 @@ namespace Common.DataAccess
 
             Conditions.Add("Category", DbParam.Get("PaidType", "And Category=Convert(nvarchar(10),@Category)"));
             Conditions.Add("[Order]", DbParam.GetLike("1", "[Order]", DbParam.LikeMode.Both));
-            
+
             Order.Add("Category", "Category DESC");
             Order.Add("Value", "Value DESC");
 
@@ -895,7 +897,9 @@ namespace Common.DataAccess
             }
             Console.WriteLine("===結束=========");
         */
-        #endregion
-        #endregion
+
+        #endregion 教學範例
+
+        #endregion "因為和DBA政策，TSQL全改成走SP，故mark此區塊"
     }
 }

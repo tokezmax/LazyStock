@@ -1,22 +1,14 @@
 ﻿using Common.Tools;
 using isRock.LineBot;
 using LazyStock.ScheduleServices.Model.Data;
-using LazyStock.ScheduleServices.Model.Line;
 using LazyStock.ScheduleServices.Services.DataProvide;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LazyStock.ScheduleServices.Services.Notifly
 {
-    class DeilyStockNotiflyServices
+    internal class DeilyStockNotiflyServices
     {
         public String CheckDoneDirPath = "";
         public String CheckDoneFileName = "";
@@ -49,8 +41,8 @@ namespace LazyStock.ScheduleServices.Services.Notifly
             var bot = new Bot(channelAccessToken);
             try
             {
-
-                if (CheckIsDone()) {
+                if (CheckIsDone())
+                {
                     LogHelper.doLog(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name, "執行過了，do Nothing");
                     return;
                 }
@@ -58,41 +50,40 @@ namespace LazyStock.ScheduleServices.Services.Notifly
                 List<HighQualityListModel> QueryQuality =
                    StableStockServices.QueryQuality();
 
-                
                 String StableTitle = $"==={GetDate.ToString("yyyy-MM-dd")}===\n保守型-到價提醒: \n ";
                 String UnStableTitle = $"==={GetDate.ToString("yyyy-MM-dd")}===\n預估型-到價提醒: \n ";
                 String StableContext = "";
                 String UnStableContext = "";
 
                 String LZUrl = "\nhttp://lazystock.azurewebsites.net";
-                QueryQuality.OrderBy(x=>x.StockNum).ToList().ForEach(t =>
-                {
-                    if(t.StableIsBuy =="1")
-                        StableContext += $"{t.StockNum}{t.StockName} \n ";
-                    else if (t.UnStableIsBuy == "1")
-                        UnStableContext += $"{t.StockNum}{t.StockName} \n ";
-                });
-                
+                QueryQuality.OrderBy(x => x.StockNum).ToList().ForEach(t =>
+                  {
+                      if (t.StableIsBuy == "1")
+                          StableContext += $"{t.StockNum}{t.StockName} \n ";
+                      else if (t.UnStableIsBuy == "1")
+                          UnStableContext += $"{t.StockNum}{t.StockName} \n ";
+                  });
+
                 //List<String> users = new List<string>();
                 //string _userid = "";
-                foreach (String userid in Setting.AppSettings("LineNotiflyUserIds").Split(',')) {
+                foreach (String userid in Setting.AppSettings("LineNotiflyUserIds").Split(','))
+                {
                     if (String.IsNullOrEmpty(userid))
                         continue;
-                    if(!String.IsNullOrEmpty(StableContext))
-                        bot.PushMessage(userid, StableTitle+ StableContext+ LZUrl);
+                    if (!String.IsNullOrEmpty(StableContext))
+                        bot.PushMessage(userid, StableTitle + StableContext + LZUrl);
                     if (!String.IsNullOrEmpty(UnStableContext))
-                        bot.PushMessage(userid, UnStableTitle + UnStableContext+ LZUrl);
+                        bot.PushMessage(userid, UnStableTitle + UnStableContext + LZUrl);
                 }
-                
+
                 if (!System.IO.Directory.Exists(CheckDoneDirPath))
                     System.IO.Directory.CreateDirectory(CheckDoneDirPath);
 
                 System.IO.File.WriteAllText(this.CheckDoneFullPath, "done");
 
-
                 LogHelper.doLog(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name, "發送成功!");
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 LogHelper.doLog(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.Name, "[Exception]" + e.Message);
                 try

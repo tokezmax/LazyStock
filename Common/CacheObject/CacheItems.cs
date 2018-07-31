@@ -2,23 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Threading;
 
 namespace Common.CacheObject
 {
     public class CacheItems
     {
-        static readonly ObjectCache cache = MemoryCache.Default;
+        private static readonly ObjectCache cache = MemoryCache.Default;
 
         //加入Lock機制限定同一Key同一時間只有一個Callback執行
-        const string AsyncLockPrefix = "$$CacheAsyncLock#";
+        private const string AsyncLockPrefix = "$$CacheAsyncLock#";
 
         /// <summary>
         /// 取得每個Key專屬的鎖定對象
         /// </summary>
         /// <param name="key">Cache保存號碼牌</param>
         /// <returns></returns>
-        static object GetAsyncLock(string key)
+        private static object GetAsyncLock(string key)
         {
             //取得每個Key專屬的鎖定對象（object）
             string asyncLockKey = AsyncLockPrefix + key;
@@ -63,7 +62,7 @@ namespace Common.CacheObject
         /// <returns></returns>
         public static void Add<T>(Func<T> callback, string key, DateTimeOffset absExpire, bool forceRefresh = false) where T : class
         {
-            string cacheKey = key;       
+            string cacheKey = key;
             //取得每個Key專屬的鎖定對象
             lock (GetAsyncLock(key))
             {
@@ -84,7 +83,7 @@ namespace Common.CacheObject
                 }
             }
         }
- 
+
         /// <summary>
         /// 建立可以被Cache的資料(注意：非Thread-Safe)
         /// </summary>
@@ -136,6 +135,5 @@ namespace Common.CacheObject
         {
             return cache.Select(keyValuePair => keyValuePair.Key).ToList();
         }
-
     }
 }

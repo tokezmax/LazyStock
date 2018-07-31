@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Common.Tools
 {
@@ -16,21 +13,22 @@ namespace Common.Tools
         {
             String Token = "";
             Random Counter = new Random(Guid.NewGuid().GetHashCode());
-            while (Token.Length < x){
+            while (Token.Length < x)
+            {
                 Token += Counter.Next().ToString();
             }
             return Token.Substring(0, x);
         }
-        
+
         /// <summary>
         /// 取得TimeStamp
         /// </summary>
         /// <param name="x"></param>
         /// <returns>yyyyMMddHHmmssfff + X碼亂數 +"客製化字串"</returns>
-        public static string GetTimeStamp(int x=0,String CustomerString="")
+        public static string GetTimeStamp(int x = 0, String CustomerString = "")
         {
             String ReturnToken = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            if(x>0)
+            if (x > 0)
                 ReturnToken += GetRandom(x);
             if (!String.IsNullOrWhiteSpace(CustomerString))
                 ReturnToken += CustomerString;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace LazyStock.Web.Models
+﻿namespace LazyStock.Web.Models
 {
     public class EPSDataModel
     {
@@ -15,7 +10,4 @@ namespace LazyStock.Web.Models
         public float KeepEPS { get; set; }
         public float Quarter3EPSAvg { get; set; }
     }
-
-    
-
 }

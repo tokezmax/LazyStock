@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace LazyStock.ScheduleServices.Model
 {
@@ -14,5 +11,4 @@ namespace LazyStock.ScheduleServices.Model
         public Nullable<double> TotalDivi { get; set; }
         public Nullable<double> EachDiviFromEPS { get; set; }
     }
-  
 }

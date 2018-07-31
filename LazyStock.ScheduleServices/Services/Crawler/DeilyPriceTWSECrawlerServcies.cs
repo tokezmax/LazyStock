@@ -1,21 +1,19 @@
-﻿using System;
+﻿using Common.Tools;
+using LazyStock.ScheduleServices.Model;
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using Common.Tools;
-using LazyStock.ScheduleServices.Model;
-using Newtonsoft.Json;
 
 namespace LazyStock.ScheduleServices.Services
 {
     public class DeilyPriceTWSECrawlerServcies : BaseCrawlerServcies
     {
-        
-        public  String ClassName = "DeilyPriceTWSECrawlerServcies";
+        public String ClassName = "DeilyPriceTWSECrawlerServcies";
         public const String SQLUpdateLocalDB = "UPDATE [StockPrice] set StockPrice =@StockPrice,ModifyDate=getdate() where StockNum=@StockNum";
         private const string TraType = "TWSE";
         protected string DownloadUrl;
@@ -28,12 +26,10 @@ namespace LazyStock.ScheduleServices.Services
         protected String CheckDoneFileName;
         protected String CheckDoneFullPath;
         protected String DownloadData = "";
-        List<StockPriceDataModel> StockPricesList;
-
+        private List<StockPriceDataModel> StockPricesList;
 
         public DeilyPriceTWSECrawlerServcies()
         {
-            
             DownloadUrl = Setting.AppSettings("TWSEStockPriceURL");
             UploadUrl = Setting.AppSettings("ReceiveByDeilyPriceURL");
             GetDate = DateTime.Now;
@@ -64,19 +60,18 @@ namespace LazyStock.ScheduleServices.Services
                 System.IO.Directory.CreateDirectory(DownloadDirPath);
         }
 
-        public override void CheckIsDone() {
+        public override void CheckIsDone()
+        {
             if (System.IO.File.Exists(CheckDoneFullPath))
                 throw new Exception("[" + GetDate.ToString("yyyyMMdd") + "]Before Done, do nothing!");
         }
 
         public override void Download()
         {
-            
             String url = DownloadUrl.Replace("@yyyyMMdd", GetDate.ToString("yyyyMMdd"));
-            
+
             using (WebClient wClient = new WebClient())
                 DownloadData = wClient.DownloadString(url);
-
 
             if (DownloadData.IndexOf(@"證券代號") < 0)
                 throw new Exception("錯誤的資料格式!");
@@ -106,16 +101,17 @@ namespace LazyStock.ScheduleServices.Services
                 }
 
                 double CsvPrice = 0;
-                try{
+                try
+                {
                     CsvPrice = csv.GetField<double>(8);
-                }catch { }
+                }
+                catch { }
 
                 StockPricesList.Add(new StockPriceDataModel
                 {
                     StockNum = CsvStockNum,
                     StockPrice = Math.Round(CsvPrice, 2)
                 });
-
             }
             UploadData();
             UpdateLocalDB();
@@ -123,7 +119,8 @@ namespace LazyStock.ScheduleServices.Services
 
         protected override void UploadData()
         {
-            try { 
+            try
+            {
                 LogHelper.doLog(this.ClassName, "==準備發送==\r\n" + StockPricesList.Count.ToString() + "筆");
 
                 for (int i = 0; i < StockPricesList.Count; i = i + 100)
@@ -144,8 +141,7 @@ namespace LazyStock.ScheduleServices.Services
                 }
                 System.IO.File.WriteAllText(this.CheckDoneFullPath, "done");
                 LogHelper.doLog(this.ClassName, "[Succ]Done");
-
-            }   
+            }
             catch (Exception ex)
             {
                 throw ex;
