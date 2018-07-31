@@ -8,8 +8,14 @@
 
     <AppSettings>
       <PowerAdmin>1qaz2wsx0p;/9ol.</PowerAdmin>
-      <LineAuthAfterRedirect>http://www.lazystock.tw</LineAuthAfterRedirect>
 
+      <LineAuthAfterRedirect>http://localhost:2458</LineAuthAfterRedirect>
+
+
+      <LineAuthCallBackUrl_prod>https://lazystock.azurewebsites.net/Member/CallbackFromLine</LineAuthCallBackUrl_prod>
+      <LineAuthId_prod>1593644840</LineAuthId_prod>
+      <LineAuthClientSecret_prod>760934e2ecec09b4e73af7f18a0abfcc</LineAuthClientSecret_prod>
+      
       <LineAuthCallBackUrl>http://localhost:2458/Member/CallbackFromLine</LineAuthCallBackUrl>
       <LineAuthId>1595672622</LineAuthId>
       <LineAuthClientSecret>9ea78245156190a518416a2a1ba2ac2d</LineAuthClientSecret>
